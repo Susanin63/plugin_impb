@@ -1,0 +1,46 @@
+From 86ae28e4470da2ad1614582fa25c30e1e7628a4a Mon Sep 17 00:00:00 2001
+From: Susanin63 <rusadmin@gmail.com>
+Date: Thu, 2 Apr 2020 22:50:05 +0400
+Subject: [PATCH] link to impb plugin
+
+---
+ poller_mactrack.php | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/poller_mactrack.php b/poller_mactrack.php
+index 033125e..38eb59a 100644
+--- a/poller_mactrack.php
++++ b/poller_mactrack.php
+@@ -34,6 +34,13 @@ include('./include/cli_check.php');
+ include_once($config['base_path'] . '/lib/poller.php');
+ include_once($config['base_path'] . '/plugins/mactrack/lib/mactrack_functions.php');
+ 
++//***************************IMPB****************************************
++if (file_exists($config["base_path"] . "/plugins/impb/mactrack_impb.php")) {
++		include_once($config["base_path"] . "/plugins/impb/mactrack_impb.php");
++    }
++//***************************IMPB****************************************
++   
++   
+ /* get the mactrack polling cycle */
+ $max_run_duration = read_config_option('mt_collection_timing');
+ $poller_interval  = read_config_option('poller_interval');
+@@ -674,6 +681,15 @@ function collect_mactrack_data($start, $site_id = 0) {
+ 
+ 		mactrack_debug('Finished transferring scan results to main table.');
+ 
++		//***************************IMPB****************************************
++
++			if (function_exists('mactrack_impb_recent_data')) {
++                cacti_log("NOTE: MACTRACK ==> IMPB Data transfer started\n");
++                call_user_func_array('mactrack_impb_recent_data', array("0"));
++                cacti_log("NOTE: MACTRACK ==> IMPB Data transfer ended\n");
++            }
++        //***************************IMPB****************************************		
++
+ 		/* transfer the subnet information, although primative, into the ip_ranges table */
+ 		$ip_ranges = db_fetch_assoc("SELECT SUBSTRING_INDEX(`ip_address`,'.',3) AS ip_range,
+ 			site_id,
+-- 
+1.8.3.1
+
