@@ -559,7 +559,7 @@
  
  function  process_auto_delete_blocks($device_id = 0) {
  
-//$flood_minute = db_fetch_cell("SELECT count(*) FROM `imb_cli`  where `device_id`='" . $row["device_id"] . "' and `cli_index`='" . $row["oid"] . "' and `cli_ip`='" . $row["ip"] . "' and `cli_port`='" . $row["port"] . "' and `cli_type`='" . $row["type_op"] . "' and `cli_date` > DATE_SUB(NOW(),INTERVAL 2 MINUTE) ;");
+
 	$str_ids ='';	
 		
 	$blocks = db_fetch_assoc("SELECT `imb_devices`.`device_id`, `blmac_id`, `blmac_blocked_ip`, `blmac_macaddr` ,`blmac_index` ,`blmac_port`, `blmac_vid` , '1' as type_op,`net_id`  FROM `imb_blmacs` " .
@@ -581,7 +581,7 @@
 		foreach($blocks as $key => $block) {
 			//check for flood
 			$rezult = false;
-			$flood = imp_check_for_flood ($block, false);
+			$flood = imp_check_for_flood (array('device_id' => $block['device_id'],'ip' => $block['blmac_blocked_ip'],'mac' => $block['blmac_macaddr'],'port' => $block['blmac_port'],'vlan' => $block['blmac_vid'],'oid' => $block['blmac_index'],'type_op' => '1'), false);
 			if (!($flood)) {
 				//$rezult = api_imp_delete_blmacs($block["blmac_id"], $block);
 				$rezult = api_imp_delete_blmacs($block, $blmacs_devices[$block["device_id"]]);
@@ -596,7 +596,7 @@
  };
  
 function  process_auto_add_binding($device_id = 0) {
-	global $impb_imp_mode;
+	global $config, $impb_imp_mode;
 	
 	$blocks = db_fetch_assoc("SELECT `imb_blmacs`.`blmac_id`, `net_id`, INET_NTOA(`net_ipaddr`) as `anet_ipaddr`,`setting_imb_def_mode`, `blmac_port` as port, '2' as type_op FROM `imb_blmacs` " .
 		" join imb_auto_updated_nets ON ((inet_aton(`blmac_blocked_ip`) & `net_mask`) = `net_ipaddr`)  " .
@@ -611,7 +611,7 @@ function  process_auto_add_binding($device_id = 0) {
 			$blmac_record = db_fetch_row ("SELECT * FROM `imb_blmacs` WHERE `blmac_id`='" . $block["blmac_id"] . "';");
 			
 			$rezult == false;
-			$flood = imp_check_for_flood ($block, false);
+			$flood = imp_check_for_flood (array('device_id' => $block['device_id'],'ip' => $block['blmac_blocked_ip'],'mac' => $block['blmac_macaddr'],'port' => $block['blmac_port'],'vlan' => $block['blmac_vid'],'oid' => $block['blmac_index'],'type_op' => '2'), false);
 			if (!($flood)) {
 				$rezult = imb_create_imp_record_from_block($blmac_record["device_id"], $blmac_record["blmac_macaddr"], $blmac_record["blmac_blocked_ip"], $blmac_record["blmac_port"], $blmac_record, $impb_imp_mode[$block["setting_imb_def_mode"]], true);
 			}
@@ -622,18 +622,20 @@ function  process_auto_add_binding($device_id = 0) {
 				$impb_debug = true;
 				$uid = db_fetch_cell(" SELECT lbv.uid FROM imb_auto_updated_nets i LEFT JOIN lb_staff lbs ON (i.net_ipaddr=lbs.segment) " .
 				" LEFT JOIN lb_vgroups_s lbv ON (lbs.vg_id=lbv.vg_id) where i.net_id='" . $block["net_id"]. "';");
-				impb_debug("IMPB: POller Restore balance for net_id=" . $block["net_id"] . ", uid=" . $uid);
-				cacti_log("IMPB_: POller Restore balance for net_id=" . $block["net_id"] . ", uid=" . $uid, TRUE);
-				$arrContextOptions=array(
-					"ssl"=>array(
-						"verify_peer"=>false,
-						"verify_peer_name"=>false,
-					),
-				);
-				$rest_balance = file_get_contents('https://iserver.ion63.ru/admin/_cacti/cacti.php?uid=' . $uid , false, stream_context_create($arrContextOptions));
-				impb_debug("IMPB: Poller rezult [" . print_r($rest_balance) . "]");
+				impb_debug("IMPB: Restore balance for net_id=" . $block["net_id"] . ", uid=" . $uid);
+				cacti_log("IMPB_ Restore balance for net_id=" . $block["net_id"] . ", uid=" . $uid, TRUE);
+
+				if (api_plugin_is_enabled('ion') and file_exists($config["base_path"] . '/plugins/ion/ion_functions.php')) {
+					include_once($config["base_path"] . '/plugins/ion/ion_functions.php');
+					$rest_balance = ion_activate_uid($uid);
+					impb_debug("IMPB: Poller rezult [" . print_r($rest_balance) . "]");
+				}					
 				$impb_debug = false;				
 				db_execute("DELETE FROM `imb_auto_updated_nets` WHERE `net_id`='" . $block["net_id"] . "';");
+				if (api_plugin_is_enabled('bdcom')) {
+					//db_execute("DELETE FROM `imb_auto_updated_nets` WHERE `net_id`='" . $block["net_id"] . "';");
+					db_execute("UPDATE `plugin_bdcom_podkl` SET net_archive=1, `net_change_time`=NOW(), `net_view_count`=0 WHERE `net_ipaddr`=inet_aton(" . $blmac_record["blmac_blocked_ip"] . ");");
+				}				
 			}
 			db_store_imp_log("1", $blmac_record["device_id"], "block_crt", "0", "0", "0", $log_message, $rezult, 0, $rezult, 0);
 		}

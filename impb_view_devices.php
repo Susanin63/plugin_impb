@@ -352,7 +352,7 @@ function impb_view_devices() {
  				form_selectable_cell($device["dev_type_description"], $device["device_id"],"","background-color: #" . $bgc . ";" );
  
  
- 				form_selectable_cell("<a class='linkEditMain' href='impb_view_bindings.php?report=macs&device_id=+" . $device["device_id"] . "&ip_filter_type_id=1&ip_filter=&mac_filter_type_id=1&mac_filter=&port_filter_type_id=&port_filter=&rows=-1&filter=&page=1&report=bindings&x=22&y=4'>" . $str_count_ipmac . "</a>", $device["device_id"]);
+ 				form_selectable_cell("<a class='linkEditMain' href='impb_view_bindings.php?report=bindings&device_id=+" . $device["device_id"] . "&ip_filter_type_id=1&ip_filter=&mac_filter_type_id=1&mac_filter=&port_filter_type_id=&port_filter=&rows=-1&filter=&page=1&report=bindings&x=22&y=4'>" . $str_count_ipmac . "</a>", $device["device_id"]);
  				form_selectable_cell("<a class='linkEditMain' href='impb_view_blmacs.php?report=blmacs&b_device_id=+" . $device["device_id"] . "&ip_filter_type_id=1&ip_filter=&b_port_filter=&b_mac_filter_type_id=1&b_mac_filter=&port_filter_type_id=&port_filter=&b_rows_selector=-1&b_filter=&b_page=1&report=blmacs&x=15&y=8'>" . $str_blmac_blmac . "</a>", $device["device_id"]);
  				
  

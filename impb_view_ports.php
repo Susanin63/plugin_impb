@@ -306,7 +306,6 @@ function impb_view_ports() {
  			//form_selectable_cell(number_format($port["port_number"]), $port["port_id"] );
 
  			form_selectable_cell(number_format($port["port_number"]) . " <a class='linkEditMain' href='". htmlspecialchars($config['url_path'] . "graph_ion_view.php?action=preview&style=&host_id=" . $port['cid'] . "&snmp_index=" . $port['port_number'] . "&graph_template_id=-1&rfilter=") . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_graphs.gif' alt='' title='View Graph' align='absmiddle'></a>", $port["port_id"]);
-																																								//http://sys.ion63.ru/graph_view.php?action=preview&host_id=45&rows=25&graph_template_id=0&filter=
 			form_selectable_cell($port["port_name"], $port["port_id"] );
 			form_selectable_cell(impb_convert_port_state_2_html($port), $port["port_id"]);
 			//form_selectable_cell("<strong> <span style='color: $port_imp_state_color;'>$port_imp_state</span></strong>", $port["port_id"] );

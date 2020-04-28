@@ -343,7 +343,9 @@ function impb_view_blmacs() {
 
 		$str_info .= "]</span>";  
 		
-            form_alternate_row('line' . $bmacs_result["blmac_id"], true);
+            impb_form_alternate_row('line' . $bmacs_result["blmac_id"], true, ($bmacs_result["blmac_online"] == 0));
+
+			
  			form_selectable_cell($bmacs_result["description"], $bmacs_result["blmac_id"] );
  			
  			form_selectable_cell($bmacs_result["hostname"], $bmacs_result["blmac_id"] );
