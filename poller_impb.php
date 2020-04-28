@@ -126,11 +126,7 @@
  			impb_debug("It's time to check for IpMacPort Blinding");
  			/* take time and log performance data */
  
-<<<<<<< HEAD
 			list($micro,$seconds) = explode(" ", microtime());
-=======
-             list($micro,$seconds) = split(" ", microtime());
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			$start = $seconds + $micro;
              $current_time = strtotime("now");
              
@@ -142,19 +138,11 @@
  				cacti_log("ERROR: Can not start D-Link IP-Mac-Port Blinding process.  There is already one in progress", TRUE);
                  print ("ERROR: Can not start D-Link IP-Mac-Port Blinding Trackinging process.  There is already one in progress");
  			}else{
-<<<<<<< HEAD
  			  db_execute("REPLACE INTO settings (name, value) VALUES ('impb_finish', '0')");
                collect_impb_data($start, $site_id, $device_id);
                  
  				db_execute("REPLACE INTO settings (name, value) VALUES ('impb_finish', '1')");
  				log_impb_statistics("collect");
-=======
- 			  db_execute("REPLACE INTO settings (name, value) VALUES ('dimpb_impblinding_finish', '0')");
-               collect_impblinding_data($start, $site_id, $device_id);
-                 
- 				db_execute("REPLACE INTO settings (name, value) VALUES ('dimpb_impblinding_finish', '1')");
- 				log_impblinding_statistics("collect");
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  				update_banip_records();
 
 				if (read_config_option("dimpb_use_camm_syslog") == "on") {
@@ -186,11 +174,7 @@
  	print "-h --help     - display this help message\n";
  }
  
-<<<<<<< HEAD
  function collect_impb_data($start, $site_id = 0, $only_device) {
-=======
- function collect_impblinding_data($start, $site_id = 0, $only_device) {
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	global $max_run_duration, $config, $debug;
  	/* reset the processes table */
  	if ($only_device == 0) { /*Если запущен процесс сканирования всех устройств, то удаляем данные со всех таблиц, кроме блоков (что бы сохранить информацию о времени появления записи о блоке*/
@@ -241,16 +225,10 @@
  	}
  
  	/* add the parent process to the process list */
-<<<<<<< HEAD
  	
  	if ($total_devices > 0) {
  		dimpb_db_process_add("-1");
 		/* scan through all devices */
-=======
- 	dimpb_db_process_add("-1");
- 	if ($total_devices > 0) {
- 		/* scan through all devices */
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		$j = 0;
  		$i = 0;
  		$last_time = strtotime("now");
@@ -263,11 +241,7 @@
  			for ($i = 0; $i < $processes_available; $i++) {
  				if (($j+$i) >= $total_devices) break;
  
-<<<<<<< HEAD
  				$extra_args = " -q " . $config["base_path"] . "/plugins/impb/impb_scanner.php -id=" . $device_ids[$i+$j]["device_id"] . $e_debug;
-=======
- 				$extra_args = " -q " . $config["base_path"] . "/plugins/impb/dimpb_scanner.php -id=" . $device_ids[$i+$j]["device_id"] . $e_debug;
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  				//impb_debug("ppp------>>CMD: " . $command_string . $extra_args);
  				exec_background($command_string, $extra_args);
  			}
@@ -289,11 +263,7 @@
  
  
  			/* take time to check for an exit condition */
-<<<<<<< HEAD
  			list($micro,$seconds) = explode(" ", microtime());
-=======
- 			list($micro,$seconds) = split(" ", microtime());
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			$current = $seconds + $micro;
  
  			/* exit if we've run too long */
@@ -315,11 +285,7 @@
  			sleep(2);
  
  			/* take time to check for an exit condition */
-<<<<<<< HEAD
  			list($micro,$seconds) = explode(" ", microtime());
-=======
- 			list($micro,$seconds) = split(" ", microtime());
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			$current = $seconds + $micro;
  
  			/* exit if we've run too long */
@@ -371,18 +337,12 @@
  			//db_store_imp_log("Завершен процесс опроса устройства [" . $only_device . "]", "device", $only_device, "poll",$only_device, !$exit_impb, !$exit_impb, !$exit_impb, !$exit_impb);
  		}
          
-<<<<<<< HEAD
  	}else{
 		cacti_log('ERROR: Can not start IP-Mac-Port Binding process.  NO Devices with ID=[' . $only_device . '] found!', TRUE);		
 	}
 	
  }
  function log_impb_statistics($type = "collect") {
-=======
- 	}
- }
- function log_impblinding_statistics($type = "collect") {
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	global $start;
  
  	/* let's get the number of devices */
@@ -394,11 +354,7 @@
  	$concurrent_processes = read_config_option("dimpb_processes");
  
  	/* take time and log performance data */
-<<<<<<< HEAD
  	list($micro,$seconds) = explode(" ", microtime());
-=======
- 	list($micro,$seconds) = split(" ", microtime());
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	$end = $seconds + $micro;
  
  
@@ -603,17 +559,10 @@
  
  function  process_auto_delete_blocks($device_id = 0) {
  
-<<<<<<< HEAD
 
 	$str_ids ='';	
 		
 	$blocks = db_fetch_assoc("SELECT `imb_devices`.`device_id`, `blmac_id`, `blmac_blocked_ip`, `blmac_macaddr` ,`blmac_index` ,`blmac_port`, `blmac_vid` , '1' as type_op,`net_id`  FROM `imb_blmacs` " .
-=======
-//$flood_minute = db_fetch_cell("SELECT count(*) FROM `imb_cli`  where `device_id`='" . $row["device_id"] . "' and `cli_index`='" . $row["oid"] . "' and `cli_ip`='" . $row["ip"] . "' and `cli_port`='" . $row["port"] . "' and `cli_type`='" . $row["type_op"] . "' and `cli_date` > DATE_SUB(NOW(),INTERVAL 2 MINUTE) ;");
-		
-		
-	$blocks = db_fetch_assoc("SELECT `imb_devices`.`device_id`, `blmac_id`, `blmac_blocked_ip` as ip, `blmac_macaddr` as mac,`blmac_index` as oid,`blmac_port` as port, '1' as type_op,`net_id`  FROM `imb_blmacs` " .
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		" join imb_auto_updated_nets ON ((inet_aton(`blmac_blocked_ip`) & `net_mask`) = `net_ipaddr`)  " .
 		" left join imb_devices ON (`imb_devices`.`device_id`=`imb_blmacs`.`device_id`) " . 
 		" left join imb_device_types dt ON (dt.device_type_id=imb_devices.device_type_id) " . 
@@ -632,20 +581,12 @@
 		foreach($blocks as $key => $block) {
 			//check for flood
 			$rezult = false;
-<<<<<<< HEAD
 			$flood = imp_check_for_flood (array('device_id' => $block['device_id'],'ip' => $block['blmac_blocked_ip'],'mac' => $block['blmac_macaddr'],'port' => $block['blmac_port'],'vlan' => $block['blmac_vid'],'oid' => $block['blmac_index'],'type_op' => '1'), false);
-=======
-			$flood = imp_check_for_flood ($block, false);
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 			if (!($flood)) {
 				//$rezult = api_imp_delete_blmacs($block["blmac_id"], $block);
 				$rezult = api_imp_delete_blmacs($block, $blmacs_devices[$block["device_id"]]);
 			}
-<<<<<<< HEAD
 			$log_message = "Auto delete block  Device_ID=[" . $block["device_id"] . "], IP=[" . $block["blmac_blocked_ip"] . "], MAC=[" . $block["blmac_macaddr"] . "], PORT=[" . $block["blmac_port"] . "], VID=[" . $block["blmac_vid"] . "], rezult=[" . ($rezult == "OK" ?  "OK" : "ERROR") . "]";
-=======
-			$log_message = "Auto delete block  Device_ID=[" . $block["device_id"] . "], IP=[" . $block["ip"] . "], MAC=[" . $block["mac"] . "], PORT=[" . $block["port"] . "], VID=[" . $block["vlan"] . "], rezult=[" . ($rezult == "OK" ?  "OK" : "ERROR") . "]";
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 			if ($rezult == "OK")  {
 				db_execute("UPDATE `imb_auto_updated_nets` SET `net_trigger_count`=`net_trigger_count` + 1 WHERE `net_id`='" . $block["net_id"] . "'");
 			}
@@ -655,15 +596,9 @@
  };
  
 function  process_auto_add_binding($device_id = 0) {
-<<<<<<< HEAD
 	global $config, $impb_imp_mode;
 	
 	$blocks = db_fetch_assoc("SELECT `imb_blmacs`.`blmac_id`, `net_id`, INET_NTOA(`net_ipaddr`) as `anet_ipaddr`,`setting_imb_def_mode`, `blmac_port` as port, '2' as type_op FROM `imb_blmacs` " .
-=======
-	global $impblinding_imp_mode;
-	
-	$blocks = db_fetch_assoc("SELECT `imb_blmacs`.`blmac_id`, `net_id`, INET_NTOA(`net_ipaddr`) as `anet_ipaddr`,`setting_imb_def_mode` FROM `imb_blmacs` " .
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		" join imb_auto_updated_nets ON ((inet_aton(`blmac_blocked_ip`) & `net_mask`) = `net_ipaddr`)  " .
 		" left join imb_devices ON (`imb_devices`.`device_id`=`imb_blmacs`.`device_id`) " . 
 		" left join imb_device_types ON (imb_device_types.device_type_id=imb_devices.device_type_id) " . 
@@ -676,7 +611,6 @@ function  process_auto_add_binding($device_id = 0) {
 			$blmac_record = db_fetch_row ("SELECT * FROM `imb_blmacs` WHERE `blmac_id`='" . $block["blmac_id"] . "';");
 			
 			$rezult == false;
-<<<<<<< HEAD
 			$flood = imp_check_for_flood (array('device_id' => $block['device_id'],'ip' => $block['blmac_blocked_ip'],'mac' => $block['blmac_macaddr'],'port' => $block['blmac_port'],'vlan' => $block['blmac_vid'],'oid' => $block['blmac_index'],'type_op' => '2'), false);
 			if (!($flood)) {
 				$rezult = imb_create_imp_record_from_block($blmac_record["device_id"], $blmac_record["blmac_macaddr"], $blmac_record["blmac_blocked_ip"], $blmac_record["blmac_port"], $blmac_record, $impb_imp_mode[$block["setting_imb_def_mode"]], true);
@@ -702,16 +636,6 @@ function  process_auto_add_binding($device_id = 0) {
 					//db_execute("DELETE FROM `imb_auto_updated_nets` WHERE `net_id`='" . $block["net_id"] . "';");
 					db_execute("UPDATE `plugin_bdcom_podkl` SET net_archive=1, `net_change_time`=NOW(), `net_view_count`=0 WHERE `net_ipaddr`=inet_aton(" . $blmac_record["blmac_blocked_ip"] . ");");
 				}				
-=======
-			$flood = imp_check_for_flood ($block, false);
-			if (!($flood)) {
-				$rezult = imb_create_imp_record_from_block($blmac_record["device_id"], $blmac_record["blmac_macaddr"], $blmac_record["blmac_blocked_ip"], $blmac_record["blmac_port"], $blmac_record, $impblinding_imp_mode[$block["setting_imb_def_mode"]], true);
-			}
-			$log_message = "Auto create from block on Device_ID=[" . $blmac_record["device_id"] . "], IP=[" .  $blmac_record["blmac_blocked_ip"] . "], MAC=[" . $blmac_record["blmac_macaddr"] . "], PORT=[" . $blmac_record["blmac_port"] . "], VID=[" . $blmac_record["vlan"] . "], rezult=[" . ($rezult == "OK" ?  "OK" : "ERROR") . "]";
-			cacti_log($log_message, TRUE);
-			if ($rezult == "OK")  {
-				db_execute("DELETE FROM `imb_auto_updated_nets` WHERE `net_id`='" . $block["net_id"] . "';");
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 			}
 			db_store_imp_log("1", $blmac_record["device_id"], "block_crt", "0", "0", "0", $log_message, $rezult, 0, $rezult, 0);
 		}
@@ -720,15 +644,9 @@ function  process_auto_add_binding($device_id = 0) {
 	db_execute("DELETE FROM `imb_auto_updated_nets` WHERE `net_ttl`<>0 and `net_type`='2' and DATE_ADD(imb_auto_updated_nets.net_change_time, INTERVAL  `net_ttl` HOUR) < NOW() ;");
 }
 function  process_auto_change_free_binding($device_id = 0) {
-<<<<<<< HEAD
 	global $impb_imp_mode;
 	
 	$blocks = db_fetch_assoc("SELECT `im`.`macip_id`, `ib`.`blmac_id`,  `blmac_macaddr`, `blmac_blocked_ip`, `im`.`macip_port_list`, `ib`.`blmac_port`, `idt`.`setting_imb_def_mode` FROM `imb_blmacs` ib " .
-=======
-	global $impblinding_imp_mode;
-	
-	$blocks = db_fetch_assoc("SELECT `im`.`macip_id`, `ib`.`blmac_id`,  `blmac_macaddr`, `blmac_blocked_ip`, `im`.`macip_port_list`, `ib`.`blmac_port` FROM `imb_blmacs` ib " .
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		" LEFT JOIN imb_macip im ON (`im`.`macip_ipaddr`=`ib`.`blmac_blocked_ip` and `im`.`macip_macaddr`=`ib`.`blmac_macaddr` and `im`.`device_id`=`ib`.`device_id`) " .
 		" LEFT JOIN imb_devices id ON (`id`.`device_id`=`ib`.`device_id`) " .
 		" LEFT JOIN imb_device_types idt ON (`idt`.device_type_id=`id`.device_type_id) " .
@@ -740,15 +658,9 @@ function  process_auto_change_free_binding($device_id = 0) {
 	if (sizeof($blocks)) {
 		foreach($blocks as $key => $block) {
 			$blmac_record = db_fetch_row ("SELECT * FROM `imb_blmacs` WHERE `blmac_id`='" . $block["blmac_id"] . "';");
-<<<<<<< HEAD
 			$rezult = imb_create_imp_record_from_block($blmac_record["device_id"], $blmac_record["blmac_macaddr"], $blmac_record["blmac_blocked_ip"], $blmac_record["blmac_port"], $blmac_record, $impb_imp_mode[$block["setting_imb_def_mode"]].true);
 			
 			$log_message = "Auto Change Port (move) from block Device_ID=[" . $blmac_record["device_id"] . "], IP=[" . $blmac_record["blmac_blocked_ip"] . "], MAC=[" . $blmac_record["blmac_macaddr"] . "], PORT=[" . $blmac_record["blmac_port"] . "], VID=[" . $blmac_record["blmac_vid"] . "], rezult=[" . ($rezult == "OK" ?  "OK" : "ERROR") . "]";
-=======
-			$rezult = imb_create_imp_record_from_block($blmac_record["device_id"], $blmac_record["blmac_macaddr"], $blmac_record["blmac_blocked_ip"], $blmac_record["blmac_port"], $blmac_record, $impblinding_imp_mode[$block["setting_imb_def_mode"]].true);
-			
-			$log_message = "Auto Change Port (move) from block Device_ID=[" . $blmac_record["device_id"] . "], IP=[" . $blmac_record["blmac_blocked_ip"] . "], MAC=[" . $blmac_record["blmac_macaddr"] . "], PORT=[" . $blmac_record["blmac_port"] . "], VID=[" . $blmac_record["vlan"] . "], rezult=[" . ($rezult == "OK" ?  "OK" : "ERROR") . "]";
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 			cacti_log($log_message, TRUE);
 			if ($rezult == "OK")  {
 				db_execute("UPDATE `imb_macip` SET `macip_may_move`=0 WHERE `macip_id`='" . $block["macip_id"] . "';");
@@ -761,15 +673,9 @@ function  process_auto_change_free_binding($device_id = 0) {
 }
 
 function  process_auto_change_binding($device_id = 0) {
-<<<<<<< HEAD
 	global $impb_imp_mode;
 
 	$blocks = db_fetch_assoc("SELECT `im`.`macip_id`, `im`.`macip_ipaddr`,`im`.`macip_macaddr`,`ip`.`count_macip_record`, `ib`.`blmac_id`,  `blmac_macaddr`, `blmac_blocked_ip`, `im`.`macip_port_list`, `ib`.`blmac_port`, `idt`.`setting_imb_def_mode` FROM `imb_blmacs` ib " .
-=======
-	global $impblinding_imp_mode;
-
-	$blocks = db_fetch_assoc("SELECT `im`.`macip_id`, `im`.`macip_ipaddr`,`im`.`macip_macaddr`,`ip`.`count_macip_record`, `ib`.`blmac_id`,  `blmac_macaddr`, `blmac_blocked_ip`, `im`.`macip_port_list`, `ib`.`blmac_port` FROM `imb_blmacs` ib " .
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		" LEFT JOIN imb_macip im ON (`im`.`macip_ipaddr`=`ib`.`blmac_blocked_ip` and `im`.`macip_port_list`=`ib`.`blmac_port` and `im`.`device_id`=`ib`.`device_id`)  " .
 		" LEFT JOIN imb_devices id ON (`id`.`device_id`=`ib`.`device_id`)  " .
 		" LEFT JOIN imb_device_types idt ON (`idt`.device_type_id=`id`.device_type_id)  " .
@@ -783,11 +689,7 @@ function  process_auto_change_binding($device_id = 0) {
 	if (sizeof($blocks)) {
 		foreach($blocks as $key => $block) {
 			$blmac_record = db_fetch_row ("SELECT * FROM `imb_blmacs` WHERE `blmac_id`='" . $block["blmac_id"] . "';");
-<<<<<<< HEAD
 			$rezult = imb_create_imp_record_from_block($blmac_record["device_id"], $blmac_record["blmac_macaddr"], $blmac_record["blmac_blocked_ip"], $blmac_record["blmac_port"], $blmac_record, $impb_imp_mode[$block["setting_imb_def_mode"]], true);
-=======
-			$rezult = imb_create_imp_record_from_block($blmac_record["device_id"], $blmac_record["blmac_macaddr"], $blmac_record["blmac_blocked_ip"], $blmac_record["blmac_port"], $blmac_record, $impblinding_imp_mode[$block["setting_imb_def_mode"]], true);
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 			
 			$log_message = "Auto changing binding record Device_ID=[" . $blmac_record["device_id"] . "], IP=[" . $blmac_record["blmac_blocked_ip"] . "], NEW MAC=[" . $blmac_record["blmac_macaddr"] . "] , OLD MAC=[" . $block["macip_macaddr"] . "] on device_id=[" . $blmac_record["device_id"] . "], rezult=[" . ($rezult == "OK" ?  "OK" : "ERROR") . "]";
 			cacti_log("ATTENTION: DIMPB " . $log_message , TRUE);			
@@ -797,11 +699,7 @@ function  process_auto_change_binding($device_id = 0) {
 			}else{
 				cacti_log("AutoChange ERROR", TRUE);			
 			}
-<<<<<<< HEAD
 			//db_store_imp_log("2", $blmac_record["device_id"], "block_chng", $blmac_record["macip_id"], $block["macip_macaddr"], $blmac_record["blmac_macaddr"], $log_message, $rezult, 0, $rezult, 0);
-=======
-			db_store_imp_log("2", $blmac_record["device_id"], "block_chng", $blmac_record["macip_id"], $block["macip_macaddr"], $blmac_record["blmac_macaddr"], $log_message, $rezult, 0, $rezult, 0);
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		}
 	}
 	

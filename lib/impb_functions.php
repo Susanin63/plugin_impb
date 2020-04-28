@@ -128,6 +128,37 @@ function impb_check_user_realm($realm_id) {
 	return $current_color;
 }
 
+/* form_alternate_row - starts an HTML row with an alternating color scheme
+   @arg $light - Alternate odd style
+   @arg $row_id - The id of the row
+   @arg $reset - Reset to top of table */
+function impb_form_alternate_row($row_id = '', $light = false, $disabled = false) {
+	static $i = 1;
+
+
+	if ($i % 2 == 1) {
+		$class = 'odd';
+	} elseif ($light) {
+		$class = 'even-alternate';
+	} else {
+		$class = 'even';
+	}
+
+	$i++;
+
+	if ($row_id != '' && !$disabled && substr($row_id, 0, 4) != 'row_') {
+		print "<tr class='$class selectable tableRow' id='$row_id'>\n";
+	} elseif (substr($row_id, 0, 4) == 'row_') {
+		print "<tr class='$class tableRow' " . (strlen($disabled) ? " style='background-color:#bdbdbb;'" : "") . " id='$row_id'>\n";
+	} elseif ($row_id != '') {
+		print "<tr class='$class tableRow' " . (strlen($disabled) ? " style='background-color:#bdbdbb;'" : "") . " id='$row_id'>\n";
+	} else {
+		print "<tr class='$class tableRow' " . (strlen($disabled) ? " style='background-color:#bdbdbb;'" : "") . " >\n";
+	}
+}
+
+
+
   /*	dimpb_valid_snmp_device - This function validates that the device is reachable via snmp.
    It first attempts	to utilize the default snmp readstring.  If it's not valid, it
    attempts to find the correct read string and then updates several system
@@ -279,7 +310,10 @@ function dimpb_snmp_get($hostname, $community, $oid, $version, $username, $passw
 		}
 
 		if ($snmp_value === false) {
-			cacti_log("WARNING: DIMPB SNMP Get Timeout for Host:'$hostname', and OID:'$oid'", false);
+			// disable flood for oid after deleted block .1.3.6.1.4.1.171.12.23.4.2.1.5.
+			if (substr($oid,0,30) != '.1.3.6.1.4.1.171.12.23.4.2.1.5') {
+				cacti_log("WARNING: DIMPB SNMP Get Timeout for Host:'$hostname', and OID:'$oid'", false);
+			} 
 		}
 	}else {
 		$snmp_value = '';
@@ -1265,21 +1299,21 @@ global $debug;
 			break;			
 	}
 
-	 cacti_log("ERROR: IpMacPort imp_check_for_flood " . print_r($row,true) . ".\n");
+	 //cacti_log("ERROR: IpMacPort imp_check_for_flood " . print_r($row,true) . ".\n");
 	$flood_hour = db_fetch_row("SELECT count(*) as cnt, UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(max(`cli_date`)) as lst  FROM `imb_cli`  where `device_id`='" . $row["device_id"] . "' and `cli_index`='" . $row["oid"] . "' and `cli_ip`='" . $row["ip"] . "' and `cli_port`='" . $row["port"] . "' and `cli_type`='" . $row["type_op"] . "' and `cli_date` > DATE_SUB(NOW(),INTERVAL 1 HOUR) ;");
 	if ($flood_hour["cnt"] <= 10) {
 		$flood_minute = db_fetch_cell("SELECT count(*) FROM `imb_cli`  where `device_id`='" . $row["device_id"] . "' and `cli_index`='" . $row["oid"] . "' and `cli_ip`='" . $row["ip"] . "' and `cli_port`='" . $row["port"] . "' and `cli_type`='" . $row["type_op"] . "' and `cli_date` > DATE_SUB(NOW(),INTERVAL 2 MINUTE) ;");
 		if ($flood_minute <= 5) {
 			$rezult = false;
 		}else{
-			impb_debug("IMPB:  ERROR: with " . $str_op . " block " . $str_cli . " IP=[" . $row["ip"] . "], MAC=[" . $row["mac"] . "] - minute flood detect with count=[" . $flood_minute . "]");
+			impb_debug("IMPB:  DEBUG: with " . $str_op . " block " . $str_cli . " IP=[" . $row["ip"] . "], MAC=[" . $row["mac"] . "] - minute flood detect with count=[" . $flood_minute . "]");
 		}
 	}else{
 		if ($flood_hour["lst"] > 1800) {
 			//c последнейго изменения прошло 30 минут
 			$rezult = false;
 		}else{
-			impb_debug("IMPB:  ERROR: with " . $str_op . " block " . $str_cli . " IP=[" . $row["ip"] . "], MAC=[" . $row["mac"] . "] - hour flood detect with count=[" . $flood_hour["cnt"] . "] last was = [" . $flood_hour["lst"] . "]");
+			impb_debug("IMPB:  DEBUG: with " . $str_op . " block " . $str_cli . " IP=[" . $row["ip"] . "], MAC=[" . $row["mac"] . "] - hour flood detect with count=[" . $flood_hour["cnt"] . "] last was = [" . $flood_hour["lst"] . "]");
 		}
 	} 
 	 
