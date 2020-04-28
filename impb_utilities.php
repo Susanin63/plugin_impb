@@ -14,6 +14,7 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
  */
+<<<<<<< HEAD
 chdir('../../');
 include('./include/auth.php');
 
@@ -56,11 +57,54 @@ switch (get_request_var('action')) {
 		break;
 }
 
+=======
+ chdir('../../');
+ include("./include/auth.php");
+ 
+ /* set default action */
+ if (!isset($_REQUEST["action"])) { $_REQUEST["action"] = ""; }
+ 
+ switch ($_REQUEST["action"]) {
+ 	case 'impblinding_utilities_purge_scanning_funcs':
+ 		include_once($config['base_path'] . "/include/top_header.php");
+ 		include_once($config['base_path'] . "/plugins/impblinding/lib/impblinding_functions.php");
+ 
+ 		impblinding_utilities();
+ 		impblinding_utilities_purge_scanning_funcs();
+ 
+ 		include_once($config['base_path'] . "/include/bottom_footer.php");
+ 		break;
+ 	case 'impblinding_view_proc_status':
+ 		/* ================= input validation ================= */
+ 		input_validate_input_number(get_request_var_request("refresh"));
+ 		/* ==================================================== */
+ 
+ 		load_current_session_value("refresh", "sess_impb_utilities_refresh", "10");
+ 
+ 		$refresh["seconds"] = $_REQUEST["refresh"];
+ 		$refresh["page"] = "impblinding_utilities.php?action=impblinding_view_proc_status";
+ 
+ 		include_once($config['base_path'] . "/include/top_header.php");
+ 
+ 		impblinding_display_run_status();
+ 
+ 		include_once($config['base_path'] . "/include/bottom_footer.php");
+ 		break;		
+ 	default:
+ 		include_once($config['base_path'] . "/include/top_header.php");
+ 
+ 		impblinding_utilities();
+ 
+ 		include_once($config['base_path'] . "/include/bottom_footer.php");
+ 		break;
+ }
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  /* -----------------------
      Utilities Functions
     ----------------------- */
  
+<<<<<<< HEAD
  function impb_utilities_purge_scanning_funcs() {
  	global $config;
  
@@ -87,6 +131,33 @@ switch (get_request_var('action')) {
  
  function impb_display_run_status() {
  	global $config, $refresh_interval;
+=======
+ function impblinding_utilities_purge_scanning_funcs() {
+ 	global $config, $colors;
+ 
+ 	db_execute("TRUNCATE TABLE imb_scanning_functions");
+ 	include_once($config["base_path"] . "/plugins/impblinding/lib/impblinding_functions.php");
+ 	include_once($config["base_path"] . "/plugins/impblinding/lib/impblinding_vendors.php");
+ 
+ 	/* store the list of registered impblinding scanning functions */
+ 	foreach($impblinding_scanning_functions as $scanning_function) {
+ 		db_execute("REPLACE INTO imb_scanning_functions (scanning_function) VALUES ('" . $scanning_function . "')");
+ 	}
+ 
+ 	html_start_box("<strong>D-Link IP-MAC-Port Blinding Scanning Function Refresh Results</strong>", "98%", $colors["header"], "3", "center", "");
+ 	?>
+ 	<td>
+ 		The D-Link IP-MAC-Port Blinding scanning functions have been purged.  They will be recreated once you either edit a device or device type.
+ 	</td>
+ 	<?php
+ 	html_end_box();
+ }
+ 
+ 
+ 
+ function impblinding_display_run_status() {
+ 	global $colors, $config, $refresh_interval;
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  		//$seconds_offset = $seconds_offset * 60;
  		/* find out if it's time to collect device information */
@@ -143,6 +214,7 @@ switch (get_request_var('action')) {
  		//$time_till_next_run = $next_run_time - $current_time;
  		$time_till_next_db_maint = $next_db_maint_time - $current_time;
  
+<<<<<<< HEAD
  	html_start_box(__('IP-MAC-PORT Binding Process Status'), '100%', '', '1', 'center', '');
  	?>
  	<script type="text/javascript">
@@ -172,11 +244,40 @@ switch (get_request_var('action')) {
  						<?php
  						foreach ($refresh_interval as $key => $interval) {
  							print '<option value="' . $key . '"'; if (get_request_var('refresh') == $key) { print " selected"; } print ">" . $interval . "</option>";
+=======
+ 	html_start_box("<strong>IP-MAC-PORT Binding Process Status</strong>", "98%", $colors["header"], "1", "center", "");
+ 	?>
+ 	<script type="text/javascript">
+ 	<!--
+ 	function applyStatsRefresh(objForm) {
+ 		strURL = '?action=impblinding_view_proc_status&refresh=' + objForm.refresh[objForm.refresh.selectedIndex].value;
+ 		document.location = strURL;
+ 	}
+ 	-->
+ 	</script>
+ 	<tr bgcolor="<?php print $colors["panel"];?>">
+ 		<form name="form_impblinding_utilities_stats" method="post">
+ 		<td>
+ 			<table cellpadding="1" cellspacing="0">
+ 				<tr>
+ 					<td width="100">
+ 						&nbsp;Refresh Interval:
+ 					</td>
+ 					<td width="1">
+ 						<select name="refresh" onChange="applyStatsRefresh(document.form_impblinding_utilities_stats)">
+ 						<?php
+ 						foreach ($refresh_interval as $key => $interval) {
+ 							print '<option value="' . $key . '"'; if ($_REQUEST["refresh"] == $key) { print " selected"; } print ">" . $interval . "</option>";
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  						}
  						?>
  					</td>
  					<td>
+<<<<<<< HEAD
  						<input type='button' value='<?php print __('Refresh');?>' id='refresh'>
+=======
+ 						&nbsp;<input type="image" src="<?php print $config['url_path']; ?>images/button_refresh.gif" alt="Refresh" border="0" align="absmiddle">&nbsp;
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  					</td>
  				</tr>
  			</table>
@@ -184,10 +285,15 @@ switch (get_request_var('action')) {
  		</form>
  	</tr>
  	<?php
+<<<<<<< HEAD
 
 	html_end_box(TRUE);
 
 	html_start_box('', '100%', '', '1', 'center', '');	
+=======
+ 	html_end_box(TRUE);
+ 	html_start_box("", "98%", $colors["header"], "1", "center", "");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  	/* get information on running processes */
  	$running_processes = db_fetch_assoc("SELECT
@@ -213,6 +319,7 @@ switch (get_request_var('action')) {
  
  	$disabled_devices = db_fetch_cell("SELECT count(*) FROM imb_devices");
  
+<<<<<<< HEAD
 	html_header(array(__('Current Process Status')), 2);
 	form_alternate_row();
  	print '<td>' . __('The IP-MAC-Port Blinding Poller is:') . '</td><td>' . ($total_processes > 0 ? __('RUNNING') : __('IDLE')) . '</td>';
@@ -239,6 +346,44 @@ switch (get_request_var('action')) {
 		html_start_box(__('Running Process Summary'), '100%', '', '3', 'center', '');
  
 		html_header(array(__('Status'), __('Devices'), __('Date Started')), 3);
+=======
+ 	html_header(array("Current Process Status"), 2);
+ 	$i = 0;
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td><strong>The IP-MAC-Port Blinding Poller is:</td><td>" . ($total_processes > 0 ? "RUNNING" :  "IDLE") . "</strong></td>";
+ 	if ($total_processes > 0) {
+ 		form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 		print "<td><strong>Running Processes:</strong></td><td>" . $total_processes . "</td>";
+ 	}
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>Last Time Poller Started:</strong></td><td>" . read_config_option("dimpb_scan_date", TRUE) . "</td>";
+ 
+ 	html_header(array("Run Time Details"), 2);
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>Last Poller Runtime:</strong></td><td>" . read_config_option("dimpb_stats_general", TRUE) . "</td>";
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>Last Poller Stat:</strong></td><td>" . read_config_option("dimpb_stats", TRUE) . "</td>";
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>Maximum Concurrent Processes:</strong></td><td>" . read_config_option("dimpb_processes", TRUE) . " processes</td>";
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>Maximum Per Device Scan Time:</strong></td><td>" . read_config_option("dimpb_script_runtime", TRUE) . " minutes</td>";
+ 
+ 	html_header(array("DNS Configuration Information"), 2);
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>Reverse DNS Resolution is</strong></td><td>" . (read_config_option("mt_reverse_dns", TRUE) == "on" ? "ENABLED" : "DISABLED") . "</td>";
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>Primary DNS Server:</strong></td><td>" . read_config_option("mt_dns_primary", TRUE) . "</td>";
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>Secondary DNS Server:</strong></td><td>" . read_config_option("mt_dns_secondary", TRUE) . "</td>";
+ 	form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+ 	print "<td width=200><strong>DNS Resoution Timeout:</strong></td><td>" . read_config_option("mt_dns_timeout", TRUE) . " milliseconds</td>";
+ 	html_end_box(TRUE);
+ 
+ 	if ($total_processes > 0) {
+ 		html_start_box("<strong>Running Process Summary</strong>", "98%", $colors["header"], "3", "center", "");
+ 
+ 		html_header(array("Status", "Devices", "Date Started"), 3);
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  		$other_processes = 0;
  		$other_date = 0;
@@ -271,25 +416,41 @@ switch (get_request_var('action')) {
  		}
  
  		$i = 0;
+<<<<<<< HEAD
  		form_alternate_row();
+=======
+ 		form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		?>
  		<td><?php print "Completed";?></td>
  		<td><?php print $completed_processes;?></td>
  		<td><?php print $completed_date;?></td>
  		<?php
+<<<<<<< HEAD
  		form_alternate_row();
+=======
+ 		form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		?>
  		<td><?php print "Running";?></td>
  		<td><?php print $running_processes;?></td>
  		<td><?php print $running_date;?></td>
  		<?php
+<<<<<<< HEAD
  		form_alternate_row();
+=======
+ 		form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		?>
  		<td><?php print "Waiting";?></td>
  		<td><?php print $waiting_processes;?></td>
  		<td><?php print $waiting_date;?></td>
  		<?php
+<<<<<<< HEAD
  		form_alternate_row();
+=======
+ 		form_alternate_row_color($colors["alternate"],$colors["light"],$i); $i++;
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		if ($other_processes > 0) {
  			?>
  			<td><?php print "Other";?></td>
@@ -305,6 +466,7 @@ switch (get_request_var('action')) {
  
  
  
+<<<<<<< HEAD
 function impb_utilities() {
 	
 	html_start_box('Cacti IP-MAC-Port System Utilities', '100%', '', '3', 'center', '');
@@ -338,6 +500,40 @@ function impb_utilities() {
 		</td>
 	</tr>
 
+=======
+ function impblinding_utilities() {
+ 	global $colors;
+ 
+ 	html_start_box("<strong>D-Link IP-MAC-Port Blinding System Utilities</strong>", "98%", $colors["header"], "3", "center", "");
+ 
+ 	html_header(array("Process Status Information"), 2);
+ 
+ 	?>
+ 
+ 	<tr bgcolor="#<?php print $colors["form_alternate1"];?>">
+ 		<td class="textArea" width="320" valign="top">
+ 			<p><a href='impblinding_utilities.php?action=impblinding_view_proc_status'>View IP-MAC-Port Blinding Process Status</a></p>
+ 		</td>
+ 		<td class="textArea" valign="top">
+ 			<p>This option will let you show and set process information associated with the IP-MAC-Port Blinding polling process.</p>
+ 		</td>
+ 	</tr>
+ 
+ 
+ 	<?php html_header(array("Database Administration"), 2);?>
+ 
+ 	<tr bgcolor="#<?php print $colors["form_alternate2"];?>">
+ 		<td class="textArea" width="320" valign="top">
+ 			<p><a href='impblinding_utilities.php?action=impblinding_utilities_purge_scanning_funcs'>Refresh Scanning Functions</a></p>
+ 		</td>
+ 		<td class="textArea" valign="top">
+ 			<p>Deletes old and potentially stale Ip-Mac-Port Blinding scanning functions from the drop-down
+ 				you receive when you edit a device type.</p>
+ 		</td>
+ 	</tr>
+ 
+ 
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	<?php
  
  	html_end_box();

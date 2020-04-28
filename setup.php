@@ -35,8 +35,12 @@ function plugin_impb_install() {
 	api_plugin_register_hook('impb', 'config_form',           'impb_config_form',          'setup.php');
 	api_plugin_register_hook('impb', 'config_settings',       'impb_config_settings',      'setup.php');
 	api_plugin_register_hook('impb', 'poller_bottom',         'impb_poller_bottom',        'setup.php');
+<<<<<<< HEAD
 	api_plugin_register_hook('impb', 'page_head',             'impb_page_head',            'setup.php');
 	api_plugin_register_hook('impb', 'mac_track_finish_scan', 'impb_recent_data',          'lib/impb_functions.php');
+=======
+	//api_plugin_register_hook('impb', 'page_head',             'impb_page_head',            'setup.php');
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 
 	# device hook: intercept on device save
 	//api_plugin_register_hook('impb', 'api_device_save', 'sync_cacti_to_impb', 'impb_actions.php');
@@ -48,13 +52,18 @@ function plugin_impb_install() {
 	//api_plugin_register_hook('impb', 'device_action_execute', 'impb_device_action_execute', 'impb_actions.php');
 
 	# Register our realms
+<<<<<<< HEAD
 	api_plugin_register_realm('impb', 'impb_view.php,impb_view_ports.php,impb_view_devices.php,impb_view_bindings.php,impb_view_blmacs.php,impb_view_netdel.php,impb_view_netadd.php,impb_view_recentmacs.php,impb_view_info.php,impb_ajax.php,graph_ion_view.php', 'IMPB Viewer', 1);
+=======
+	api_plugin_register_realm('impb', 'impb_view.php', 'IMPb Viewer', 1);
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 	api_plugin_register_realm('impb', 'impblinding.php,impb_devices.php,impb_logs.php,impb_device_types.php,impb_utilities.php', 'IMPb Administrator', 1);
 
 	impb_setup_table ();
 }
  
  function plugin_impb_uninstall () {
+<<<<<<< HEAD
 	// db_execute('DROP TABLE IF EXISTS `imb_auto_updated_nets`');
 	// db_execute('DROP TABLE IF EXISTS `imb_banip`');
 	// db_execute('DROP TABLE IF EXISTS `imb_blmacs`');
@@ -79,6 +88,30 @@ function plugin_impb_install() {
 	// db_execute('DROP TABLE IF EXISTS `imb_traps_blocked`');
 	// db_execute('DELETE FROM `settings` where name = "impb_version";');
 
+=======
+	db_execute('DROP TABLE IF EXISTS `imb_auto_updated_nets`');
+	db_execute('DROP TABLE IF EXISTS `imb_banip`');
+	db_execute('DROP TABLE IF EXISTS `imb_blmacs`');
+	db_execute('DROP TABLE IF EXISTS `imb_cli`');
+	db_execute('DROP TABLE IF EXISTS `imb_device_types`');
+	db_execute('DROP TABLE IF EXISTS `imb_devices`');
+	db_execute('DROP TABLE IF EXISTS `imb_log`');
+	db_execute('DROP TABLE IF EXISTS `imb_macip`');
+	db_execute('DROP TABLE IF EXISTS `imb_mactrack_recent_ports`');
+	db_execute('DROP TABLE IF EXISTS `imb_mactrack_temp_ports`');
+	db_execute('DROP TABLE IF EXISTS `imb_ports`');
+	db_execute('DROP TABLE IF EXISTS `imb_processes`');
+	db_execute('DROP TABLE IF EXISTS `imb_scanning_functions`');
+	db_execute('DROP TABLE IF EXISTS `imb_tab_dev`');
+	db_execute('DROP TABLE IF EXISTS `imb_tabs`');
+	db_execute('DROP TABLE IF EXISTS `imb_temp_blmacinfo`');
+	db_execute('DROP TABLE IF EXISTS `imb_temp_blmacs`');
+	db_execute('DROP TABLE IF EXISTS `imb_temp_macip`');
+	db_execute('DROP TABLE IF EXISTS `imb_temp_portname`');
+	db_execute('DROP TABLE IF EXISTS `imb_temp_ports`');
+	db_execute('DROP TABLE IF EXISTS `imb_temp_ports_stat`');
+	db_execute('DROP TABLE IF EXISTS `imb_traps_blocked`');
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 }
 
 
@@ -105,11 +138,19 @@ function plugin_impb_upgrade () {
 function impb_show_tab () {
 	global $config, $user_auth_realm_filenames;
 
+<<<<<<< HEAD
 	if (api_user_realm_auth('impb_view_devices.php')) {
 		if (substr_count($_SERVER['REQUEST_URI'], 'impb_view')) {
 			print '<a href="' . $config['url_path'] . 'plugins/impb/impb_view_devices.php"><img src="' . $config['url_path'] . 'plugins/impb/images/tab_dimpb_red.png" alt="' . __('IMPB') . '"></a>';
 		}else{
 			print '<a href="' . $config['url_path'] . 'plugins/impb/impb_view_devices.php"><img src="' . $config['url_path'] . 'plugins/impb/images/tab_dimpb.png" alt="' . __('IMPB') . '"></a>';
+=======
+	if (api_user_realm_auth('impb_view.php')) {
+		if (substr_count($_SERVER['REQUEST_URI'], 'impb_view')) {
+			print '<a href="' . $config['url_path'] . 'plugins/impb/impb_view.php"><img src="' . $config['url_path'] . 'plugins/impb/images/tab_dimpb_red.png" alt="' . __('IMPb') . '" align="absmiddle" border="0"></a>';
+		}else{
+			print '<a href="' . $config['url_path'] . 'plugins/impb/impb_view.php"><img src="' . $config['url_path'] . 'plugins/impb/images/tab_dimpb.png" alt="' . __('IMPb') . '" align="absmiddle" border="0"></a>';
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		}
 	}
 }
@@ -118,6 +159,7 @@ function impb_show_tab () {
  
  
  function impb_config_arrays () {
+<<<<<<< HEAD
  	global $user_auth_realms, $menu,$user_auth_realm_filenames, $impb_snmp_versions;
  	global $impb_search_types, $impb_operation_macip_types, $impb_port_search_types, $impb_search_recent_date;
  	global $imp_timespans, $impb_type_port_num_conversion, $impb_imp_mode, $impb_value_save_cfg;
@@ -127,6 +169,17 @@ function impb_show_tab () {
 
  
    $impb_snmp_versions = array(1 =>
+=======
+ 	global $user_auth_realms, $menu,$user_auth_realm_filenames, $impblinding_snmp_versions;
+ 	global $impblinding_search_types, $impblinding_operation_macip_types, $impblinding_port_search_types, $impblinding_search_recent_date;
+ 	global $imp_timespans, $impblinding_type_port_num_conversion, $impblinding_imp_mode, $impblinding_alue_save_cfg;
+ 	global $impblinding_imp_mode_type, $impblinding_imp_action_type, $impblinding_imb_create_macip_type, $impblinding_imb_banip_type, $impblinding_imp_zerrostate_mode_type, $impblinding_imb_yes_no, $impblinding_func_version;
+ 	global $imp_port_state_2str_t2, $imp_port_state_2str_t3, $imp_port_state_color, $impblinding_revision, $impblinding_imp_MacBindingPortState, $impblinding_imp_net_ttl;
+	global $impb_port_state_2html, $impb_port_zerro_state_2html;
+
+ 
+   $impblinding_snmp_versions = array(1 =>
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	"Version 1",
  	"Version 2",
  	"Version 3");
@@ -137,6 +190,7 @@ function impb_show_tab () {
  	"DES" => "DES (default)",
  	"AES128" => "AES");  
    	
+<<<<<<< HEAD
 	
  	$menu2 = array ();
  	foreach ($menu as $temp => $temp2 ) {
@@ -146,11 +200,26 @@ function impb_show_tab () {
  			$menu2[__('IMPB Binding')]["plugins/impb/impb_device_types.php"] = __('Device Types');
  			$menu2[__('IMPB Binding')]["plugins/impb/impb_logs.php"] = __('IMPB Logs');
  			$menu2[__('IMPB Binding')]["plugins/impb/impb_utilities.php"] = __('IMPB Utilities');
+=======
+
+ 	$menu2 = array ();
+ 	foreach ($menu as $temp => $temp2 ) {
+ 		$menu2[$temp] = $temp2;
+ 		if ($temp == 'Management') {
+ 			$menu2["IpMacPort Binding"]["plugins/impb/impb_devices.php"] = "Devices";
+ 			$menu2["IpMacPort Binding"]["plugins/impb/impb_device_types.php"] = "Device Types";
+ 			$menu2["IpMacPort Binding"]["plugins/impb/impb_logs.php"] = "Dimpb Logs";
+ 			$menu2["IpMacPort Binding"]["plugins/impb/impb_utilities.php"] = "Ip-Mac-Port Utilities";
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		}
  	}
  	$menu = $menu2;
      
+<<<<<<< HEAD
      $impb_search_types = array(
+=======
+     $impblinding_search_types = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
      1 => "",
      2 => "Matches",
      3 => "Contains",
@@ -161,12 +230,20 @@ function impb_show_tab () {
      8 => "Is Not Null");	  
  
  	    
+<<<<<<< HEAD
      $impb_port_search_types = array(
+=======
+     $impblinding_port_search_types = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
      1 => "",
      2 => "Состоит",
      3 => "НЕ состоит");
  	
+<<<<<<< HEAD
  	$impb_value_save_cfg = array (
+=======
+ 	$impblinding_alue_save_cfg = array (
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
      2 => "DES-3028(2) config only",
      3 => "default (3) config only",
 	 1 => "DES-1210-28ME (1) config_1"
@@ -191,6 +268,7 @@ function impb_show_tab () {
 
  	$impb_port_state_2html = array (
 	1 => array (
+<<<<<<< HEAD
 		 0 => "<strong> <span style='color: #EA8F00;'>Non</span></strong>",
 		 1 => "<strong> <span style='color: #EA8F00;'>Ot</span></strong>",
 		 2 => "<strong> <span style='color: #00BD27;'>En</span></strong>",
@@ -234,6 +312,51 @@ function impb_show_tab () {
 	71 => array ( //swIpMacBindingPortIPInspection 12-10-28 ME
 		 1 => "<strong> <span style='color: #00BD27;'>EN</span></strong>", //en
 		 0 => "<strong> <span style='color: #FF0000;'>Dis</span></strong>" //dis
+=======
+		 0 => "<strong> <span style='color: EA8F00;'>Non</span></strong>",
+		 1 => "<strong> <span style='color: EA8F00;'>Ot</span></strong>",
+		 2 => "<strong> <span style='color: 00BD27;'>En</span></strong>",
+		 3 => "<strong> <span style='color: FF0000;'>Dis</span></strong>",
+		 4 => "<strong> <span style='color: 00BD27;'>Er</span></strong>"		
+		),
+	2 => array (
+		 0 => "<strong> <span style='color: EA8F00;'>Non</span></strong>",
+		 1 => "<strong> <span style='color: EA8F00;'>Ot</span></strong>",
+		 2 => "<strong> <span style='color: 00BD27;'>Str</span></strong>",
+		 3 => "<strong> <span style='color: FF0000;'>Dis</span></strong>",
+		 4 => "<strong> <span style='color: EA8F00;'>Los</span></strong>",
+		 5 => "<strong> <span style='color: FF0000;'>Er</span></strong>"
+	),
+	3 => array ( //swIpMacBindingPortARPInspection
+		 0 => "<strong> <span style='color: FF0000;'>ARP</span></strong>", //other
+		 1 => "<strong> <span style='color: FF0000;'>ARP</span></strong>", //dis
+		 2 => "<strong> <span style='color: 00BD27;'>ARP</span></strong>", //strict
+		 3 => "<strong> <span style='color: EA8F00;'>ARP</span></strong>" //loose
+	),
+	4 => array ( //swIpMacBindingPortIPInspection
+		 0 => "<strong> <span style='color: FF0000;'>IP</span></strong>", //other
+		 1 => "<strong> <span style='color: 00BD27;'>IP</span></strong>", //en
+		 2 => "<strong> <span style='color: FF0000;'>IP</span></strong>" //dis
+	),
+	5 => array ( //swIpMacBindingPortARPInspection DES-1210-28
+		 0 => "<strong> <span style='color: FF0000;'>ARP</span></strong>", //dis
+		 1 => "<strong> <span style='color: 00BD27;'>ARP</span></strong>", //strict
+		 2 => "<strong> <span style='color: EA8F00;'>ARP</span></strong>" //loose
+	),
+	6 => array (
+		 1 => "<strong> <span style='color: 00BD27;'>En</span></strong>",
+		 0 => "<strong> <span style='color: FF0000;'>Dis</span></strong>",
+		 2 => "<strong> <span style='color: 00BD27;'>En</span></strong>", //3010G
+		 3 => "<strong> <span style='color: FF0000;'>Dis</span></strong>"  //3010G
+	),
+	7 => array ( //swIpMacBindingPortIPInspection
+		 1 => "<strong> <span style='color: 00BD27;'>IP</span></strong>", //en
+		 0 => "<strong> <span style='color: FF0000;'>IP</span></strong>" //dis
+	),
+	71 => array ( //swIpMacBindingPortIPInspection 12-10-28 ME
+		 1 => "<strong> <span style='color: 00BD27;'>EN</span></strong>", //en
+		 0 => "<strong> <span style='color: FF0000;'>Dis</span></strong>" //dis
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 	),		
 	"arp_str2int" => array ( //swIpMacBindingPortARPInspection
 		 "disable" => "1",
@@ -267,6 +390,7 @@ function impb_show_tab () {
 
  	$impb_port_zerro_state_2html = array (
 	1 => array (
+<<<<<<< HEAD
 		 0 => "<strong> <span style='color: #EA8F00;'>NonZ</span></strong>",
 		 1 => "<strong> <span style='color: #00BD27;'>Zer</span></strong>",
 		 2 => "<strong> <span style='color: #FF0000;'>Zer</span></strong>"
@@ -280,6 +404,21 @@ function impb_show_tab () {
 		 2 => "<strong> <span style='color: #EA8F00;'>NonZ</span></strong>",
 		 1 => "<strong> <span style='color: #00BD27;'>Zer</span></strong>",
 		 0 => "<strong> <span style='color: #FF0000;'>Zer</span></strong>"
+=======
+		 0 => "<strong> <span style='color: EA8F00;'>NonZ</span></strong>",
+		 1 => "<strong> <span style='color: 00BD27;'>Zer</span></strong>",
+		 2 => "<strong> <span style='color: FF0000;'>Zer</span></strong>"
+		),
+	2 => array (
+		 0 => "<strong> <span style='color: EA8F00;'>NonZ</span></strong>",
+		 2 => "<strong> <span style='color: 00BD27;'>Zer</span></strong>",
+		 3 => "<strong> <span style='color: FF0000;'>Zer</span></strong>"
+	),
+	3 => array (
+		 2 => "<strong> <span style='color: EA8F00;'>NonZ</span></strong>",
+		 1 => "<strong> <span style='color: 00BD27;'>Zer</span></strong>",
+		 0 => "<strong> <span style='color: FF0000;'>Zer</span></strong>"
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 	)		
  	);	
 
@@ -291,7 +430,11 @@ function impb_show_tab () {
     3 => "FF0000",
  	4 => "00BD27"
  	);
+<<<<<<< HEAD
  	$impb_imp_MacBindingPortState = array (
+=======
+ 	$impblinding_imp_MacBindingPortState = array (
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
     1 => "Port - Enable(4), Disable(3)",
  	2 => "Port - En-Strict, En-Loose, Dis",	
 	3 => "Port - Other(1), En-Strict(2), Dis(3), En-Loose(4)",
@@ -302,6 +445,7 @@ function impb_show_tab () {
  	);
  	
 	
+<<<<<<< HEAD
  	$impb_revision = array (
     1 => "A/B",
  	2 => "C",	
@@ -311,6 +455,17 @@ function impb_show_tab () {
  		2 => "Изменение с перемещением");
      
  	$impb_search_recent_date = array(
+=======
+ 	$impblinding_revision = array (
+    1 => "A/B",
+ 	2 => "C",	
+ 	);	
+    	$impblinding_operation_macip_types = array(
+ 		1 => "Изменение с копированием",
+ 		2 => "Изменение с перемещением");
+     
+ 	$impblinding_search_recent_date = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	1 => "All",
  	2 => "Current only",
  	3 => "Last 10 minute",
@@ -331,50 +486,86 @@ function impb_show_tab () {
  	7 =>"Last Year"
  	);
  	
+<<<<<<< HEAD
  	$impb_type_port_num_conversion = array(
+=======
+ 	$impblinding_type_port_num_conversion = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	1 => "from start (2=[40000000]; 20-23=[00001E00])",
 	2 => "from end   (2=[00000002]; 20-23=[00780000])",
  	3 => "as is"
  	);
  	
+<<<<<<< HEAD
  	$impb_imp_mode = array(
+=======
+ 	$impblinding_imp_mode = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	1 => "ARP",
  	2 => "ACL"	
  	);
  
+<<<<<<< HEAD
  	$impb_imp_mode_type = array(
+=======
+ 	$impblinding_imp_mode_type = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	1 => "1=>arp, 2=>acl",
  	2 => "0=>arp, 1=>acl"
  	);
  
+<<<<<<< HEAD
  	$impb_imp_action_type = array(
+=======
+ 	$impblinding_imp_action_type = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	1 => "1=>inactive, 2=>active",
  	2 => "0=>inactive, 1=>active"
  	);	
  
+<<<<<<< HEAD
  	$impb_imb_create_macip_type = array(
+=======
+ 	$impblinding_imb_create_macip_type = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	1 => "Status, Mac, Port, Mode",
  	2 => "Mac, Status, Port, Mode",
 	3 => "[Mac, Status], Port, Mode",
 	4 => "[4.IP.MAC] Status, Port, Status"
  	);	
+<<<<<<< HEAD
  	$impb_imp_zerrostate_mode_type = array(
+=======
+ 	$impblinding_imp_zerrostate_mode_type = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	1 => "1=>Enable, 2=>Disable",
  	2 => "2=>Enable, 3=>Disable",
 	3 => "1=>Enable, 0=>Disable"	
  	);
+<<<<<<< HEAD
  $impb_imb_banip_type = array(
+=======
+ $impblinding_imb_banip_type = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	0 => "",
  	1 => "Balance",
  	2 => "Adm. block",
  	3 => "NO_Billing",
 	4 => "Other"
  	);
+<<<<<<< HEAD
  $impb_imb_yes_no = array(
  	0 => "NO",
  	1 => "YES"
  	);
  $impb_func_version = array(
+=======
+ $impblinding_imb_yes_no = array(
+ 	0 => "NO",
+ 	1 => "YES"
+ 	);
+ $impblinding_func_version = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	33 => "<= 3.3",
  	35 => "3.6 >= X >= 3.3",
 	39 => ">= 3.9"
@@ -388,7 +579,11 @@ function impb_show_tab () {
  		60 => "1 Minute",
  		300 => "5 Minutes");	
  
+<<<<<<< HEAD
  $impb_imp_net_ttl = array(
+=======
+ $impblinding_imp_net_ttl = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		1 => "1 Час",
  		3 => "3 Часа",
  		12 => "12 Часов",
@@ -401,13 +596,21 @@ function impb_show_tab () {
  };
  
  function impb_config_settings () {
+<<<<<<< HEAD
  	global $tabs, $settings, $impb_snmp_versions;
+=======
+ 	global $tabs, $settings, $impblinding_snmp_versions;
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	global $snmp_auth_protocols, $snmp_priv_protocols;
  
  	$tabs["impblinding"] = "Dimpb";
  
  	$settings["impblinding"] = array(
+<<<<<<< HEAD
  		"impb_hdr_timing" => array(
+=======
+ 		"impblinding_hdr_timing" => array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			"friendly_name" => "D-Link IP-Mac-Port Blinding General Settings",
  			"method" => "spacer",
  			),
@@ -432,7 +635,11 @@ function impb_show_tab () {
  			"method" => "textbox",
  			"max_length" => "100"
  			),			
+<<<<<<< HEAD
  		"impb_hdr_general" => array(
+=======
+ 		"impblinding_hdr_general" => array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			"friendly_name" => "D-Link IP-Mac-Port Blinding SNMP General Settings",
  			"method" => "spacer",
  			),
@@ -457,7 +664,11 @@ function impb_show_tab () {
  			"default" => "3",
  			"max_length" => "100"
  			),			
+<<<<<<< HEAD
  		"impb_hdr_read_snmp" => array(
+=======
+ 		"impblinding_hdr_read_snmp" => array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			"friendly_name" => "D-Link IP-Mac-Port Blinding SNMP READ Settings",
  			"method" => "spacer",
  			),
@@ -466,7 +677,11 @@ function impb_show_tab () {
  			"description" => "Default SNMP version for all new hosts.",
  			"method" => "drop_array",
  			"default" => "Version 2",
+<<<<<<< HEAD
  			"array" => $impb_snmp_versions,
+=======
+ 			"array" => $impblinding_snmp_versions,
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			),
  		"dimpb_read_snmp_community" => array(
  			"friendly_name" => "SNMP Community",
@@ -511,7 +726,11 @@ function impb_show_tab () {
  			"default" => "DES (default)",
  			"array" => $snmp_priv_protocols,
  			),
+<<<<<<< HEAD
  		"impb_hdr_write_snmp" => array(
+=======
+ 		"impblinding_hdr_write_snmp" => array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			"friendly_name" => "D-Link IP-Mac-Port Blinding SNMP WRITE Settings",
  			"method" => "spacer",
  			),
@@ -520,7 +739,11 @@ function impb_show_tab () {
  			"description" => "Default SNMP version for all new hosts.",
  			"method" => "drop_array",
  			"default" => "Version 2",
+<<<<<<< HEAD
  			"array" => $impb_snmp_versions,
+=======
+ 			"array" => $impblinding_snmp_versions,
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			),
  		"dimpb_write_snmp_community" => array(
  			"friendly_name" => "SNMP Community",
@@ -568,7 +791,11 @@ function impb_show_tab () {
  			"default" => "DES (default)",
  			"array" => $snmp_priv_protocols,
  			),
+<<<<<<< HEAD
  		"impb_hdr_configs" => array(
+=======
+ 		"impblinding_hdr_configs" => array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			"friendly_name" => "D-Link IP-Mac-Port Blinding Configs Settings",
  			"method" => "spacer",
  			),
@@ -622,7 +849,11 @@ function impb_show_tab () {
  			),			
  		);
  
+<<<<<<< HEAD
  		$settings["visual"]["impb_header"] = array(
+=======
+ 		$settings["visual"]["impblinding_header"] = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  			"friendly_name" => "D-Link IP-Mac-Port Blinding",
  			"method" => "spacer",
  			);
@@ -648,12 +879,18 @@ function impb_show_tab () {
    $nav["impb_device_types.php:import"] = array("title" => "(Import)", "mapping" => "index.php:,impb_device_types.php:", "url" => "", "level" => "2");
    $nav["impb_device_types.php:actions"] = array("title" => "Actions", "mapping" => "index.php:,impb_device_types.php:", "url" => "", "level" => "2");
    $nav["impb_utilities.php:"] = array("title" => "Ip-Mac_port Blinding Utilities", "mapping" => "index.php:", "url" => "impb_utilities.php", "level" => "1");
+<<<<<<< HEAD
    $nav["impb_utilities.php:impb_utilities_purge_scanning_funcs"] = array("title" => "Refresh Scanning Functions", "mapping" => "index.php:,impb_utilities.php:", "url" => "impb_utilities.php", "level" => "2");   
    $nav["impb_utilities.php:impb_view_proc_status"] = array("title" => "Show Poller Status", "mapping" => "index.php:,impb_utilities.php:", "url" => "impb_utilities.php", "level" => "2");   
+=======
+   $nav["impb_utilities.php:impblinding_utilities_purge_scanning_funcs"] = array("title" => "Refresh Scanning Functions", "mapping" => "index.php:,impb_utilities.php:", "url" => "impb_utilities.php", "level" => "2");   
+   $nav["impb_utilities.php:impblinding_view_proc_status"] = array("title" => "Show Poller Status", "mapping" => "index.php:,impb_utilities.php:", "url" => "impb_utilities.php", "level" => "2");   
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
    $nav["impb_logs.php:"] = array("title" => "D-Link IP-Mac-Port Blinding Logs", "mapping" => "index.php:", "url" => "impb_logs.php", "level" => "1");
    $nav["impb_logs.php:actions_logs"] = array("title" => "Delete Dimpb LOGS", "mapping" => "index.php:,impb_logs.php:", "url" => "impb_logs.php", "level" => "2");   
    $nav["impb_view.php:"] = array("title" => "IpMacPort Blinding Viewer", "mapping" => "index.php:", "url" => "impb_view.php", "level" => "1");
    $nav["impb_view.php:actions"] = array("title" => "Actions", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+<<<<<<< HEAD
    
    
    $nav["impb_view_ports.php:"] = array("title" => __('IMPB View Ports'), "mapping" => "", "url" => "impb_view_ports.php", "level" => "0");
@@ -663,6 +900,17 @@ function impb_show_tab () {
    $nav["impb_view_bindings.php:"] = array("title" => __('IMPB View Bindings'), "mapping" => "", "url" => "impb_view_bindings.php", "level" => "0");
    $nav["impb_view_bindings.php:actions"] = array("title" => __('Actions'), "mapping" => "index.php:,impb_view_bindings.php:", "url" => "", "level" => "2");   
 
+=======
+   $nav["impb_view.php:actions_ports"] = array("title" => "Actions_ports", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+   $nav["impb_view.php:actions_blmacs"] = array("title" => "Actions_blmacs", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+   $nav["impb_view.php:actions_devices"] = array("title" => "Actions_devices", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+   $nav["impb_view.php:actions_recentmacs"] = array("title" => "Actions_recentmacs", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+   $nav["impb_view.php:actions_macips"] = array("title" => "Actions_macips", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+   $nav["impb_view.php:actions_logs"] = array("title" => "Actions_logs", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+   $nav["impb_view.php:actions_banips"] = array("title" => "Actions_banips", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+   $nav["impb_view.php:actions_net_del"] = array("title" => "Actions_net_del", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+   $nav["impb_view.php:actions_net_add"] = array("title" => "Actions_net_add", "mapping" => "index.php:,impb_view.php:", "url" => "", "level" => "2");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
    
     return $nav;
@@ -671,7 +919,11 @@ function impb_show_tab () {
  function impb_page_head() {
 	global $config;
 
+<<<<<<< HEAD
 	if (substr_count(get_current_page(), 'impb_')) {
+=======
+	if (isset($_SERVER['PHP_SELF']) && substr_count($_SERVER['PHP_SELF'], 'impb_')) {
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		if (!isset($config['base_path'])) {
 			print "<script type='text/javascript' src='" . URL_PATH . "plugins/impb/impb.js'></script>\n";
 		}else{
@@ -681,7 +933,10 @@ function impb_show_tab () {
 				print "<link type='text/css' href='" . $config['url_path'] . "plugins/impb/impb.css' rel='stylesheet'>\n";
 			}
 		}
+<<<<<<< HEAD
 		print "<script type='text/javascript' src='" . $config['url_path'] . "plugins/impb/jquery.bpopup.min.js'></script>\n";
+=======
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		print "<script type='text/javascript' src='" . $config['url_path'] . "plugins/impb/impb.js'></script>\n";
 		print "<script type='text/javascript' src='" . $config['url_path'] . "plugins/impb/impb_snmp.js'></script>\n";
 	}
@@ -702,6 +957,7 @@ function impb_show_tab () {
  
 
  function impb_config_form () {
+<<<<<<< HEAD
  	global $fields_impb_device_type_edit, $impb_device_types, $fields_impb_device_edit;
  	global $impb_snmp_versions, $fields_macipport_edit, $fields_impb_macip_group_edit, $impb_revision, $impb_imp_MacBindingPortState;
  	global $impb_operation_macip_types, $impb_type_port_num_conversion, $impb_value_save_cfg;
@@ -710,6 +966,16 @@ function impb_show_tab () {
  
  	/* file: impb_device_types.php, action: edit */
  	$fields_impb_device_type_edit = array(
+=======
+ 	global $fields_impblinding_device_type_edit, $impblinding_device_types, $fields_impblinding_device_edit;
+ 	global $impblinding_snmp_versions, $fields_macipport_edit, $fields_impblinding_macip_group_edit, $impblinding_revision, $impblinding_imp_MacBindingPortState;
+ 	global $impblinding_operation_macip_types, $impblinding_type_port_num_conversion, $impblinding_alue_save_cfg;
+ 	global $impblinding_imp_mode_type, $impblinding_imp_action_type, $impblinding_imb_create_macip_type;
+ 	global $snmp_auth_protocols, $snmp_priv_protocols, $impblinding_imp_zerrostate_mode_type, $impblinding_imp_mode,$impblinding_imb_yes_no, $impblinding_func_version;
+ 
+ 	/* file: impb_device_types.php, action: edit */
+ 	$fields_impblinding_device_type_edit = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	"spacer0" => array(
  		"method" => "spacer",
  		"friendly_name" => "General Device Type Options"
@@ -735,7 +1001,11 @@ function impb_show_tab () {
  		"description" => "Тип преобразования номера портов.",
  		"value" => "|arg1:type_port_num_conversion|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_type_port_num_conversion
+=======
+ 		"array" => $impblinding_type_port_num_conversion
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"type_port_use_long" => array(
  		"method" => "drop_array",
@@ -743,7 +1013,11 @@ function impb_show_tab () {
  		"description" => "Используеться ли длинное обозначение в номерах портов ([00 00 00 00 00 00 40 00] заместо [00 00 40 00]). DES-3028",
  		"value" => "|arg1:type_port_use_long|",
  		"default" => 0,
+<<<<<<< HEAD
  		"array" => $impb_imb_yes_no
+=======
+ 		"array" => $impblinding_imb_yes_no
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"type_use_more_32x_port" => array(
  		"method" => "drop_array",
@@ -751,7 +1025,11 @@ function impb_show_tab () {
  		"description" => "Количество портов > 32",
  		"value" => "|arg1:type_use_more_32x_port|",
  		"default" => 0,
+<<<<<<< HEAD
  		"array" => $impb_imb_yes_no
+=======
+ 		"array" => $impblinding_imb_yes_no
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"impb_func_version" => array(
  		"method" => "drop_array",
@@ -759,7 +1037,11 @@ function impb_show_tab () {
  		"description" => "Address_binding Function Version",
  		"value" => "|arg1:impb_func_version|",
  		"default" => 0,
+<<<<<<< HEAD
  		"array" => $impb_func_version
+=======
+ 		"array" => $impblinding_func_version
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),		
  	"spacer1" => array(
  		"method" => "spacer",
@@ -801,7 +1083,11 @@ function impb_show_tab () {
  		"description" => "Какое значение установить для выполнения команды сохранения конфигурации",
  		"value" => "|arg1:snmp_value_save_cfg|",
  		"default" => 3,
+<<<<<<< HEAD
  		"array" => $impb_value_save_cfg
+=======
+ 		"array" => $impblinding_alue_save_cfg
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		)	,		
  	"snmp_timeout_agentSaveCfg" => array(
  		"method" => "textbox",
@@ -831,7 +1117,11 @@ function impb_show_tab () {
  		"description" => "Ревизия устройства",
  		"value" => "|arg1:type_revision|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_revision
+=======
+ 		"array" => $impblinding_revision
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),			
  	"snmp_oid_ifIndex" => array(
  		"method" => "textbox",
@@ -934,7 +1224,11 @@ function impb_show_tab () {
  		"description" => "Используеться простое или двойственное включение привязки",
  		"value" => "|arg1:type_imb_MacBindingPortState|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imp_MacBindingPortState
+=======
+ 		"array" => $impblinding_imp_MacBindingPortState
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),		
  	"snmp_oid_en_MacBindingZerroIpPortState" => array(
  		"method" => "textbox",
@@ -950,7 +1244,11 @@ function impb_show_tab () {
  		"description" => "Тип преобразования режима ZerroIP на порту",
  		"value" => "|arg1:type_imb_zerrostate_mode|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imp_zerrostate_mode_type
+=======
+ 		"array" => $impblinding_imp_zerrostate_mode_type
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"snmp_oid_en_fwd_dhcp_packets_state" => array(
  		"method" => "textbox",
@@ -1013,7 +1311,11 @@ function impb_show_tab () {
  		"description" => "",
  		"value" => "|arg1:type_imb_create_macip|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imb_create_macip_type
+=======
+ 		"array" => $impblinding_imb_create_macip_type
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  
  	"snmp_oid_MacBindingIpIndex" => array(
@@ -1058,7 +1360,11 @@ function impb_show_tab () {
  		"description" => "Тип преобразования состояния активности.",
  		"value" => "|arg1:type_imb_mode|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imp_action_type
+=======
+ 		"array" => $impblinding_imp_action_type
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"snmp_oid_MacBindingMode" => array(
  		"method" => "textbox",
@@ -1074,7 +1380,11 @@ function impb_show_tab () {
  		"description" => "Тип преобразования состояния режима записи.",
  		"value" => "|arg1:type_imb_mode|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imp_mode_type
+=======
+ 		"array" => $impblinding_imp_mode_type
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  		
  	"spacer6" => array(
@@ -1133,7 +1443,11 @@ function impb_show_tab () {
  		"description" => "Тип привязки, который будет устанавливаться по умолчанию при создании записи на основе блока.",
  		"value" => "|arg1:setting_imb_def_mode|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imp_mode
+=======
+ 		"array" => $impblinding_imp_mode
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"setting_imb_use_autoban" => array(
  		"method" => "drop_array",
@@ -1141,7 +1455,11 @@ function impb_show_tab () {
  		"description" => "Разрешено ли использовать автоматическую установку банов (от скриптов) ?",
  		"value" => "|arg1:setting_imb_use_autoban|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imb_yes_no
+=======
+ 		"array" => $impblinding_imb_yes_no
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"setting_imb_use_auto_unblock" => array(
  		"method" => "drop_array",
@@ -1149,7 +1467,11 @@ function impb_show_tab () {
  		"description" => "Разрешено ли использовать автоматическое удаление блоков, если ИП попавший в блок, принадлежит специально описанным сетям ?",
  		"value" => "|arg1:setting_imb_use_auto_unblock|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imb_yes_no
+=======
+ 		"array" => $impblinding_imb_yes_no
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"setting_imb_use_auto_add" => array(
  		"method" => "drop_array",
@@ -1157,7 +1479,11 @@ function impb_show_tab () {
  		"description" => "Использовать автоматическое создание привязки, если ИП, попавший в блок заранее прописан в таблице [На подключение]",
  		"value" => "|arg1:setting_imb_use_auto_add|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imb_yes_no
+=======
+ 		"array" => $impblinding_imb_yes_no
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),
  	"setting_imb_use_auto_change" => array(
  		"method" => "drop_array",
@@ -1165,7 +1491,11 @@ function impb_show_tab () {
  		"description" => "Использовать автоматическое изменение привязки, если MAC, попал в блок с IP, который прописан на этом-же порту",
  		"value" => "|arg1:setting_imb_use_auto_change|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imb_yes_no
+=======
+ 		"array" => $impblinding_imb_yes_no
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),		
  	"setting_imb_use_reenable_onport" => array(
  		"method" => "drop_array",
@@ -1173,7 +1503,11 @@ function impb_show_tab () {
  		"description" => "В некоторых случаях при удалении привязки, её уже нет на свиче, но она действует (нет прохождения пакетов). Отключение и повторное включение привязки на этом порту решает эту проблему.",
  		"value" => "|arg1:setting_imb_use_reenable_onport|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_imb_yes_no
+=======
+ 		"array" => $impblinding_imb_yes_no
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),		
 
 
@@ -1192,7 +1526,11 @@ function impb_show_tab () {
  		)
  	);
  
+<<<<<<< HEAD
  	$fields_impb_device_edit = array(
+=======
+ 	$fields_impblinding_device_edit = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	"spacer0" => array(
  		"method" => "spacer",
  		"friendly_name" => "General Device Settings"
@@ -1292,7 +1630,11 @@ function impb_show_tab () {
  		"on_change" => "changeDimpbHostForm()",
  		"value" => "|arg1:snmp_get_version|",
  		"default" => read_config_option("dimpb_read_snmp_ver"),
+<<<<<<< HEAD
  		"array" => $impb_snmp_versions,
+=======
+ 		"array" => $impblinding_snmp_versions,
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),	
  	"snmp_get_community" => array(
  		"method" => "textbox",
@@ -1367,7 +1709,11 @@ function impb_show_tab () {
  		"on_change" => "changeDimpbHostForm()",
  		"value" => "|arg1:snmp_set_version|",
  		"default" => read_config_option("dimpb_write_snmp_ver"),
+<<<<<<< HEAD
  		"array" => $impb_snmp_versions,
+=======
+ 		"array" => $impblinding_snmp_versions,
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		),	
  	"snmp_set_community" => array(
  		"method" => "textbox",
@@ -1480,7 +1826,11 @@ function impb_show_tab () {
  	);
  	
  
+<<<<<<< HEAD
  	$fields_impb_macip_group_edit = array(
+=======
+ 	$fields_impblinding_macip_group_edit = array(
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	"spacer0" => array(
  		"method" => "spacer",
  		"friendly_name" => "Изменяемые параметры"
@@ -1506,7 +1856,11 @@ function impb_show_tab () {
  		"description" => "Выберите тип операции, которую необходимо совершить над записями",
  		"value" => "|arg1:operation_type|",
  		"default" => 1,
+<<<<<<< HEAD
  		"array" => $impb_operation_macip_types
+=======
+ 		"array" => $impblinding_operation_macip_types
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		)	
  	);
  	}
@@ -1514,9 +1868,14 @@ function impb_show_tab () {
  function impb_check_upgrade () {
  	// Let's only run this check if we are on a page that actually needs the data
  	$files = array('impb_view.php', 'impb_devices.php', 'impb_device_types.php', 'impb_logs.php', 'poller.php', 'impb_utilities.php', 'impb_view.php',);
+<<<<<<< HEAD
 	if (!in_array(get_current_page(), $files)) {
  		return;
 	}
+=======
+ 	if (isset($_SERVER['PHP_SELF']) && !in_array(basename($_SERVER['PHP_SELF']), $files))
+ 		return;
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  	$current = plugin_impb_version ();
  	$current = $current['version'];
@@ -1525,7 +1884,11 @@ function impb_show_tab () {
  		//impb_setup_table ();
  }
  
+<<<<<<< HEAD
  function impb_check_dependencies() {
+=======
+ function impblinding_check_dependencies() {
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	global $plugins, $config;
  	if (!in_array('settings', $plugins))
  		return false;
@@ -1546,10 +1909,17 @@ function impb_setup_table () {
  	// Set the new version
  	$new = plugin_impb_version();
  	$new = $new['version'];
+<<<<<<< HEAD
  	$old = db_fetch_cell('SELECT `value` FROM `settings` where name = "impb_version"');
  	
  	if (trim($old) == '') {
  		$old = '0.0.1b';
+=======
+ 	$old = db_fetch_cell("SELECT `value` FROM `settings` where name = 'impb_version'");
+ 	db_execute("REPLACE INTO settings (name, value) VALUES ('impb_version', '$new')");
+ 	if (trim($old) == "") {
+ 		$old = "0.0.1b";
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  	$sql = "show tables from `" . $database_default . "`";
  	$result = db_fetch_assoc($sql) or die (mysql_error());
@@ -1585,8 +1955,13 @@ function impb_setup_table () {
  		$sql[] = array("dimpb_execute_sql","Insert into [settings] new parametr [dimpb_snmp_get_priv_protocol]","INSERT INTO settings VALUES ('dimpb_processes',5);");
  if (!in_array("dimpb_script_runtime", $result_new))	
  		$sql[] = array("dimpb_execute_sql","Insert into [settings] new parametr [dimpb_processes]","INSERT INTO settings VALUES ('dimpb_script_runtime',5);");
+<<<<<<< HEAD
  if (!in_array("impb_finish", $result_new))	
  		$sql[] = array("dimpb_execute_sql","Insert into [settings] new parametr [impb_finish]","INSERT IGNORE INTO settings VALUES ('impb_finish',1);");
+=======
+ if (!in_array("dimpb_impblinding_finish", $result_new))	
+ 		$sql[] = array("dimpb_execute_sql","Insert into [settings] new parametr [dimpb_impblinding_finish]","INSERT INTO settings VALUES ('dimpb_impblinding_finish',1);");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  if (!in_array("dimpb_stats", $result_new))	
  		$sql[] = array("dimpb_execute_sql","Insert into [settings] new parametr [dimpb_stats]","INSERT INTO settings VALUES ('dimpb_stats','ipmacs:0 Blockedmacs:0 Active_ports:0');");
  if (!in_array("dimpb_read_snmp_communities", $result_new))	
@@ -1646,6 +2021,7 @@ function impb_setup_table () {
  if (!in_array("dimpb_max_count_rec_for_auto_change", $result_new))	
  		$sql[] = array("dimpb_execute_sql","Insert into [settings] new parametr [dimpb_max_count_rec_for_auto_change]","INSERT INTO settings VALUES ('dimpb_max_count_rec_for_auto_change','2');");
 		
+<<<<<<< HEAD
  	
 
 	// If are realms are not present in plugin_realms recreate them with the old realm ids (minus 100) so that upgraded installs are not broken
@@ -1654,6 +2030,18 @@ function impb_setup_table () {
 		db_execute("INSERT INTO plugin_realms (id, plugin, file, display) VALUES (7778, 'impb', 'impblinding.php,impb_devices.php,impb_logs.php,impb_device_types.php,impb_utilities.php', 'IMPB Administrator')");
 	}
 
+=======
+ 	$result = db_fetch_assoc("SELECT realm_id FROM user_auth_realm;");
+ 	foreach($result as $row) {
+ 		$result_new[] =$row['realm_id'];
+ 	}
+ 
+ if (!in_array("7777", $result_new))	
+ 		$sql[] = array("dimpb_execute_sql","Insert into [user_auth_realm] value for admin","INSERT INTO `user_auth_realm` VALUES (7777, 1);");
+ if (!in_array("7778", $result_new))	
+ 		$sql[] = array("dimpb_execute_sql","Insert into [user_auth_realm] value for admin","INSERT INTO `user_auth_realm` VALUES (7778, 1);");
+ 		
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	if (!in_array('imb_blmacs', $tables)) {
  		$sql[] = array("dimpb_create_table","imb_blmacs","CREATE TABLE `imb_blmacs` (
  		  `blmac_id` int(10) unsigned NOT NULL auto_increment,
@@ -1670,6 +2058,7 @@ function impb_setup_table () {
  		  `blmac_first_scan_date` datetime NOT NULL default '0000-00-00 00:00:00',
  		  `blmac_scan_date` datetime NOT NULL default '0000-00-00 00:00:00',
  		  `blmac_count_scan` int(11) NOT NULL default '0',
+<<<<<<< HEAD
 		  `blmac_blocked_ip` varchar(20) NOT NULL DEFAULT '',
 		  `blmac_done` tinyint(1) NOT NULL DEFAULT '0',
 		  `blmac_done_view_count` tinyint(1) NOT NULL DEFAULT '0',
@@ -1776,6 +2165,27 @@ function impb_setup_table () {
 
 
 
+=======
+ 		  PRIMARY KEY  (`device_id`,`blmac_index`),
+ 		  KEY `blmac_id` (`blmac_id`)
+ 		) ENGINE=MyISAM;");
+ 	}
+ 
+ 	
+ 	if (!in_array('imb_device_types', $tables)) {
+ 		$sql[] = array("dimpb_create_table","imb_device_types","CREATE TABLE `imb_device_types` (
+ 		  `device_type_id` int(10) unsigned NOT NULL auto_increment,
+ 		  `description` varchar(100) NOT NULL default '',
+ 		  `cacti_host_template_id` mediumint(8) unsigned NOT NULL default '0',
+ 		  `oid_get_port_index` varchar(40) NOT NULL default '',
+ 		  `scanning_function` varchar(100) NOT NULL default '',
+ 		  PRIMARY KEY  (`device_type_id`)
+ 		) ENGINE=MyISAM;");	
+ 		$sql[] = array("dimpb_execute_sql","Insert into [imb_device_types] new device type [D-Link  DES-30xx]","INSERT INTO imb_device_types (`device_type_id`,`description`,`cacti_host_template_id`,`oid_get_port_index`,`scanning_function`)  VALUES (1,'D-Link  DES-30xx',0,'','scan_dlink_35xx_switch');");
+ 		$sql[] = array("dimpb_execute_sql","Insert into [imb_device_types] new device type [D-Link  DES-38xx]","INSERT INTO imb_device_types (`device_type_id`,`description`,`cacti_host_template_id`,`oid_get_port_index`,`scanning_function`)  VALUES (2,'D-Link  DES-38xx',0,'','scan_dlink_30xx_switch');");
+ 	}
+ 
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	if (!in_array('imb_devices', $tables)) {
  		$sql[] = array("dimpb_create_table","imb_devices","CREATE TABLE `imb_devices` (
  		  `device_id` int(10) unsigned NOT NULL auto_increment,
@@ -1822,7 +2232,11 @@ function impb_setup_table () {
  		  KEY `snmp_sysDescr` (`snmp_sysDescr`),
  		  KEY `snmp_sysObjectID` (`snmp_sysObjectID`),
  		  KEY `device_type_id` (`device_type_id`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB   COMMENT='Devices to be scanned for Ip-Mac-Port rows';");
+=======
+ 		) ENGINE=MyISAM COMMENT='Devices to be scanned for Ip-Mac-Port rows';");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  
  	if (!in_array('imb_log', $tables)) {
@@ -1844,7 +2258,11 @@ function impb_setup_table () {
  		  `log_read_admin` char(2) NOT NULL default '0',
  		  `log_saved` char(2) NOT NULL default '0',
  		  PRIMARY KEY  (`log_id`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB  ;");
+=======
+ 		) ENGINE=MyISAM;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  
  	if (!in_array('imb_macip', $tables)) {
@@ -1854,7 +2272,11 @@ function impb_setup_table () {
  		  `macip_index` varchar(20) NOT NULL default '',
  		  `macip_macaddr` varchar(20) NOT NULL default '',
  		  `macip_ipaddr` varchar(20) NOT NULL default '',
+<<<<<<< HEAD
  		  `macip_port_hex` varchar(36) NOT NULL default '',
+=======
+ 		  `macip_port_hex` varchar(10) NOT NULL default '',
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		  `macip_port_list` varchar(80) NOT NULL default '',
  		  `macip_port_view` varchar(80) NOT NULL default '',
  		  `macip_imb_state` char(2) default '',
@@ -1866,10 +2288,16 @@ function impb_setup_table () {
  		  `macip_scan_date` datetime NOT NULL default '0000-00-00 00:00:00',
  		  `macip_lastchange_date` datetime NOT NULL default '0000-00-00 00:00:00',
  		  `macip_count_scan` int(11) NOT NULL default '0',
+<<<<<<< HEAD
 		  `macip_flat` varchar(5) NOT NULL DEFAULT '0',
  		  PRIMARY KEY  (`device_id`,`macip_ipaddr`,`macip_macaddr`,`macip_port_hex`),
  		  KEY `macip_id` (`macip_id`)
  		) ENGINE=InnoDB  ;");
+=======
+ 		  PRIMARY KEY  (`device_id`,`macip_ipaddr`,`macip_macaddr`,`macip_port_hex`),
+ 		  KEY `macip_id` (`macip_id`)
+ 		) ENGINE=MyISAM;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  
  	
@@ -1899,7 +2327,11 @@ function impb_setup_table () {
  		  KEY `hostname` (`hostname`),
  		  KEY `device_id` (`device_id`),
  		  KEY `ip_address` (`ip_address`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB   COMMENT='Database for Recent Tracking Device MAC''s';");
+=======
+ 		) ENGINE=MyISAM COMMENT='Database for Recent Tracking Device MAC''s';");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}	
  	
  	if (!in_array('imb_ports', $tables)) {
@@ -1916,6 +2348,7 @@ function impb_setup_table () {
  		  `port_online` char(2) default '',
  		  `macip_temp_id` int(10) NOT NULL default '0',
  		  `scan_date` datetime NOT NULL default '0000-00-00 00:00:00',
+<<<<<<< HEAD
 		  `port_status_last_change` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
  		  `count_macip_record` int(11) NOT NULL default '0',
  		  `count_scanmac_record_max` int(11) NOT NULL default '0',
@@ -1926,6 +2359,14 @@ function impb_setup_table () {
  		  PRIMARY KEY  (`device_id`,`port_number`),
  		  KEY `port_id` (`port_id`)
  		) ENGINE=InnoDB   ;");
+=======
+ 		  `count_macip_record` int(11) NOT NULL default '0',
+ 		  `count_scanmac_record_max` int(11) NOT NULL default '0',
+ 		  `count_scanmac_record_cur` int(11) NOT NULL default '0',
+ 		  PRIMARY KEY  (`device_id`,`port_number`),
+ 		  KEY `port_id` (`port_id`)
+ 		) ENGINE=MyISAM ;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  	
  	if (!in_array('imb_processes', $tables)) {
@@ -1935,7 +2376,11 @@ function impb_setup_table () {
  		  `status` varchar(20) NOT NULL default 'Queued',
  		  `start_date` datetime NOT NULL default '0000-00-00 00:00:00',
  		  PRIMARY KEY  (`device_id`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB   ;");
+=======
+ 		) ENGINE=MyISAM ;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  	
  
@@ -1944,8 +2389,15 @@ function impb_setup_table () {
  		  `scanning_function` varchar(100) NOT NULL default '',
  		  `description` varchar(200) NOT NULL default '',
  		  PRIMARY KEY  (`scanning_function`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB    COMMENT='Registered Scanning Functions';");		
 
+=======
+ 		) ENGINE=MyISAM  COMMENT='Registered Scanning Functions';");		
+ 		$sql[] = array("dimpb_execute_sql","Insert into [imb_scanning_functions] new function [scan_dlink_30xx_switch]","INSERT INTO imb_scanning_functions (`scanning_function`,`description`)  VALUES ('scan_dlink_30xx_switch','');");
+ 		$sql[] = array("dimpb_execute_sql","Insert into [imb_scanning_functions] new function [scan_dlink_38xx_switch]","INSERT INTO imb_scanning_functions (`scanning_function`,`description`)  VALUES ('scan_dlink_38xx_switch','');");
+ 		$sql[] = array("dimpb_execute_sql","Insert into [imb_scanning_functions] new function [scan_dlink_35xx_switch]","INSERT INTO imb_scanning_functions (`scanning_function`,`description`)  VALUES ('scan_dlink_35xx_switch','');");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  	
  	if (!in_array('imb_temp_blmacinfo', $tables)) {
@@ -1959,7 +2411,11 @@ function impb_setup_table () {
  		  `blmacinfo_scan_port` char(3) NOT NULL default '',
  		  PRIMARY KEY  (`blmacinfo_info_id`,`blmacinfo_cor_portlist`,`blmacinfo_cor_ip`),
  		  KEY `blmacinfo_id` (`blmacinfo_id`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB  ;");
+=======
+ 		) ENGINE=MyISAM;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  	
  	if (!in_array('imb_temp_blmacs', $tables)) {
@@ -1975,7 +2431,11 @@ function impb_setup_table () {
  		  `blmac_scan_date` datetime NOT NULL default '0000-00-00 00:00:00',
  		  PRIMARY KEY  (`device_id`,`blmac_index`),
  		  KEY `blmac_id` (`blmac_id`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB  ;");
+=======
+ 		) ENGINE=MyISAM;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  	if (!in_array('imb_temp_macip', $tables)) {
  		$sql[] = array("dimpb_create_table","imb_temp_macip","CREATE TABLE `imb_temp_macip` (
@@ -1984,14 +2444,22 @@ function impb_setup_table () {
  		  `macip_index` varchar(20) NOT NULL default '',
  		  `macip_macaddr` varchar(20) NOT NULL default '',
  		  `macip_ipaddr` varchar(20) NOT NULL default '',
+<<<<<<< HEAD
  		  `macip_port_hex` varchar(36) NOT NULL default '',
+=======
+ 		  `macip_port_hex` varchar(10) NOT NULL default '',
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		  `macip_port_list` varchar(80) NOT NULL default '',
  		  `macip_port_view` varchar(80) NOT NULL default '',
  		  `macip_imb_state` char(2) default '',
  		  `scan_date` datetime NOT NULL default '0000-00-00 00:00:00',
  		  PRIMARY KEY  (`device_id`,`macip_index`),
  		  KEY `port_id` (`macip_id`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB  ;");
+=======
+ 		) ENGINE=MyISAM;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  	
  	if (!in_array('imb_temp_ports', $tables)) {
@@ -2008,12 +2476,18 @@ function impb_setup_table () {
  		  `count_macip_record` int(11) NOT NULL default '0',
  		  `count_scanmac_record_max` int(11) NOT NULL default '0',
  		  `count_scanmac_record_cur` int(11) NOT NULL default '0',
+<<<<<<< HEAD
 		`port_LoopVLAN` varchar(40) NOT NULL DEFAULT '0',
 		`port_unt_vl` varchar(40) NOT NULL DEFAULT '0',
 		`port_t_vl` varchar(150) NOT NULL DEFAULT '0',		  
  		  PRIMARY KEY  (`device_id`,`port_number`),
  		  KEY `port_id` (`port_id`)
  		) ENGINE=InnoDB  ;");
+=======
+ 		  PRIMARY KEY  (`device_id`,`port_number`),
+ 		  KEY `port_id` (`port_id`)
+ 		) ENGINE=MyISAM;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  	
  	if (!in_array('imb_temp_ports_stat', $tables)) {
@@ -2022,7 +2496,11 @@ function impb_setup_table () {
  		  `port_number` int(4) NOT NULL default '0',
  		  `count_rec` int(11) NOT NULL default '0',
  		  PRIMARY KEY  (`device_id`,`port_number`)
+<<<<<<< HEAD
  		) ENGINE=InnoDB  ;");
+=======
+ 		) ENGINE=MyISAM;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}
  
  	if (!in_array('imb_mactrack_temp_ports', $tables)) {
@@ -2055,7 +2533,11 @@ function impb_setup_table () {
  			  KEY `updated` (`updated`),
  			  KEY `vendor_mac` (`vendor_mac`),
  			  KEY `authorized` (`authorized`)
+<<<<<<< HEAD
  			) ENGINE=InnoDB ;");
+=======
+ 			) ENGINE=MyISAM;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		}
  	if (!in_array('imb_cli', $tables)) {
  		$sql[] = array("dimpb_create_table","imb_cli","CREATE TABLE  `imb_cli` (		
@@ -2069,7 +2551,11 @@ function impb_setup_table () {
 			  `cli_vid` int(5) NOT NULL DEFAULT '0',
 			  `cli_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`cli_id`)
+<<<<<<< HEAD
 			) ENGINE=InnoDB ;");		
+=======
+			) ENGINE=MyISAM;");		
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		
 		}
  	if (!in_array('imb_tabs', $tables)) {
@@ -2077,6 +2563,7 @@ function impb_setup_table () {
 			  `tab_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `tab_name` varchar(45) NOT NULL DEFAULT '',
 			  PRIMARY KEY (`tab_id`)
+<<<<<<< HEAD
 			) ENGINE=InnoDB ;");		
 		}
 		$sql[] = array("dimpb_execute_sql","INSERT IGNORE INTO [imb_tabs] data for some tabs","INSERT INTO `imb_tabs` (`tab_id`,`tab_name`) VALUES " .
@@ -2086,6 +2573,10 @@ function impb_setup_table () {
 					
 
 
+=======
+			) ENGINE=MyISAM;");		
+		}
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 
  	if (!in_array('imb_tab_dev', $tables)) {
  		$sql[] = array("dimpb_create_table","imb_tab_dev","CREATE TABLE  `imb_tab_dev` (		
@@ -2094,6 +2585,7 @@ function impb_setup_table () {
 				`dev_id` int(10) unsigned NOT NULL,
 				PRIMARY KEY (`row_id`),
 				UNIQUE KEY `dev_on_tab` (`tab_id`,`dev_id`)
+<<<<<<< HEAD
 			) ENGINE=InnoDB ;");		
 		}
 
@@ -2119,6 +2611,15 @@ function impb_setup_table () {
 		
  	switch($old) {
         case '0.0.1b': 
+=======
+			) ENGINE=MyISAM;");		
+		}
+
+		
+ 	switch($old) {
+        case '0.0.1b': 
+           $sql[] = array("dimpb_modify_column","imb_device_types","device_type_id", "ALTER TABLE `imb_device_types` MODIFY COLUMN `device_type_id` INTEGER UNSIGNED NOT NULL DEFAULT NULL AUTO_INCREMENT;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		  $sql[] = array("dimpb_modify_column","imb_devices","device_id", "ALTER TABLE `imb_devices` MODIFY COLUMN `device_id` INTEGER UNSIGNED NOT NULL DEFAULT NULL AUTO_INCREMENT;");
  		  $old = '0.0.14b';                                                                                                      
         case '0.0.14b': 
@@ -2128,6 +2629,7 @@ function impb_setup_table () {
         case '0.0.15b': 
  		  $sql[] = array("dimpb_add_column","imb_macip","macip_mode","ALTER TABLE `imb_macip` ADD COLUMN `macip_mode` enum('ARP','ACL') NOT NULL default 'ARP' after macip_imb_state;");
  		  $sql[] = array("dimpb_add_column","imb_temp_macip","macip_mode","ALTER TABLE `imb_temp_macip` ADD COLUMN `macip_mode` enum('ARP','ACL') NOT NULL default 'ARP' after macip_imb_state;");
+<<<<<<< HEAD
  			$old = '0.0.19b'; 		  
  	case '0.0.19b': 
  		$sql[] = array("dimpb_modify_column","imb_temp_ports","port_active", "ALTER TABLE `imb_temp_ports` MODIFY COLUMN `port_active` CHAR(2) NOT NULL DEFAULT 0;");
@@ -2137,6 +2639,59 @@ function impb_setup_table () {
  		if (!impb_db_column_exists('imb_temp_macip','macip_imb_state')) {
 			$sql[] = array("dimpb_execute_sql","Change colmun name macip_imb_state => macip_imb_status in table [imb_temp_macip]", "ALTER TABLE `imb_temp_macip` CHANGE COLUMN `macip_imb_state` `macip_imb_status`  TINYINT NOT NULL DEFAULT '-1'");
 		}
+=======
+ 			$old = '0.0.17b'; 		  
+        case '0.0.17b': 
+ 		  $sql[] = array("dimpb_execute_sql","DROP TABLE IF EXISTS `imb_device_types`","DROP TABLE IF EXISTS `imb_device_types`;");
+ 		  $sql[] = array("dimpb_create_table","imb_device_types","CREATE TABLE  `imb_device_types` (
+ 			`device_type_id` int(10) unsigned NOT NULL auto_increment,
+ 			`description` varchar(100) NOT NULL default '',
+ 			`cacti_host_template_id` mediumint(8) unsigned NOT NULL default '0',
+ 			`scanning_function` varchar(100) NOT NULL default '',
+			`impb_func_version` varchar(2) NOT NULL default '0',
+ 			`type_port_num_conversion` varchar(2) NOT NULL default '0',
+ 			`snmp_oid_MacBindingACLMode` varchar(100) default '',
+ 			`snmp_oid_MacBindingTrapLogState` varchar(100) default '',
+ 			`snmp_oid_agentSaveCfg` varchar(100) default '',
+ 			`snmp_oid_ifIndex` varchar(100) NOT NULL default '.1.3.6.1.2.1.2.2.1.1',
+ 			`snmp_oid_ifDescr` varchar(100) NOT NULL default '.1.3.6.1.2.1.2.2.1.2',
+ 			`snmp_oid_ifType` varchar(100) NOT NULL default '.1.3.6.1.2.1.2.2.1.3',
+ 			`snmp_oid_ifSpeed` varchar(100) NOT NULL default '.1.3.6.1.2.1.2.2.1.5',
+ 			`snmp_oid_ifOperStatus` varchar(100) NOT NULL default '.1.3.6.1.2.1.2.2.1.8',
+ 			`snmp_oid_MacBindingPortState` varchar(100) NOT NULL default '',
+ 			`snmp_oid_en_MacBindingZerroIpPortState` varchar(100) NOT NULL default '',
+			`snmp_oid_en_swIpMacBindingPortARPInspection` varchar(100) NOT NULL default '',
+			`snmp_oid_en_swIpMacBindingPortIPInspection` varchar(100) NOT NULL default '',
+			`snmp_oid_en_swIpMacBindingPortIPProtocol` varchar(100) NOT NULL default '',
+ 			`snmp_oid_ifAlias` varchar(100) NOT NULL default '.1.3.6.1.2.1.31.1.1.1.18',
+ 			`type_imb_create_macip` TINYINT NOT NULL DEFAULT '1',
+ 			`snmp_oid_MacBindingIpIndex` varchar(100) NOT NULL default '',
+ 			`snmp_oid_MacBindingMac` varchar(100) NOT NULL default '',
+ 			`snmp_oid_MacBindingStatus` varchar(100) NOT NULL default '',
+ 			`snmp_oid_MacBindingPorts` varchar(100) NOT NULL default '',
+ 			`snmp_oid_MacBindingAction` varchar(100) NOT NULL default '',
+ 			`type_imb_action` TINYINT NOT NULL DEFAULT '1',
+ 			`snmp_oid_MacBindingMode` varchar(100) default '',
+ 			`type_imb_mode` TINYINT NOT NULL DEFAULT '1',
+ 			`snmp_oid_MacBindingBlockedVID` varchar(100) NOT NULL default '',
+ 			`snmp_oid_MacBindingBlockedMac` varchar(100) NOT NULL default '',
+			`snmp_oid_MacBindingBlockedIP` varchar(100) NOT NULL default '',
+ 			`snmp_oid_MacBindingBlockedVlanName` varchar(100) NOT NULL default '',
+ 			`snmp_oid_MacBindingBlockedPort` varchar(100) NOT NULL default '',
+ 			`snmp_oid_BindingBlockedType` varchar(100) NOT NULL default '',
+ 			PRIMARY KEY  (`device_type_id`),
+ 			UNIQUE KEY `description` (`description`)
+ 			) ENGINE=MyISAM ;");
+ 			$sql[] = array("dimpb_execute_sql","INSERT INTO [imb_device_types] data for some device's type","INSERT INTO `imb_device_types` (`device_type_id`,`description`,`cacti_host_template_id`,`scanning_function`,`type_port_num_conversion`,`snmp_oid_MacBindingACLMode`,`snmp_oid_MacBindingTrapLogState`,`snmp_oid_agentSaveCfg`,`snmp_oid_ifIndex`,`snmp_oid_ifDescr`,`snmp_oid_ifType`,`snmp_oid_ifSpeed`,`snmp_oid_ifOperStatus`,`snmp_oid_MacBindingPortState`,`snmp_oid_en_MacBindingZerroIpPortState`,`snmp_oid_ifAlias`,`snmp_oid_MacBindingIpIndex`,`snmp_oid_MacBindingMac`,`snmp_oid_MacBindingStatus`,`snmp_oid_MacBindingPorts`,`snmp_oid_MacBindingAction`,`snmp_oid_MacBindingMode`,`snmp_oid_MacBindingBlockedVID`,`snmp_oid_MacBindingBlockedMac`,`snmp_oid_MacBindingBlockedIP`,`snmp_oid_MacBindingBlockedVlanName`,`snmp_oid_MacBindingBlockedPort`,`snmp_oid_BindingBlockedType`) VALUES " .
+ 				" (1,'DES-30xx Universal',0,'scan_dlink_universal','2','','','.1.3.6.1.4.1.171.12.1.2.6.0','.1.3.6.1.2.1.2.2.1.1','.1.3.6.1.2.1.2.2.1.2','.1.3.6.1.2.1.2.2.1.3','.1.3.6.1.2.1.2.2.1.5','.1.3.6.1.2.1.2.2.1.8','.1.3.6.1.4.1.171.12.23.3.2.1.2','.1.3.6.1.4.1.171.12.23.3.2.1.3','.1.3.6.1.2.1.31.1.1.1.18','.1.3.6.1.4.1.171.12.23.4.1.1.1','.1.3.6.1.4.1.171.12.23.4.1.1.2','.1.3.6.1.4.1.171.12.23.4.1.1.3','.1.3.6.1.4.1.171.12.23.4.1.1.4','','','.1.3.6.1.4.1.171.12.23.4.2.1.1','.1.3.6.1.4.1.171.12.23.4.2.1.2',``,'.1.3.6.1.4.1.171.12.23.4.2.1.3','.1.3.6.1.4.1.171.12.23.4.2.1.4','.1.3.6.1.4.1.171.12.23.4.2.1.5'), " .
+ 				" (2,'DES-3526',0,'scan_dlink_universal','1','.1.3.6.1.4.1.171.11.64.1.2.7.6.0','.1.3.6.1.4.1.171.11.64.1.2.7.5.0','.1.3.6.1.4.1.171.12.1.2.6.0','.1.3.6.1.2.1.2.2.1.1','.1.3.6.1.2.1.2.2.1.2','.1.3.6.1.2.1.2.2.1.3','.1.3.6.1.2.1.2.2.1.5','.1.3.6.1.2.1.2.2.1.8','.1.3.6.1.4.1.171.11.64.1.2.7.1.1.2','.1.3.6.1.4.1.171.11.64.1.2.7.1.1.3','.1.3.6.1.2.1.31.1.1.1.18','.1.3.6.1.4.1.171.11.64.1.2.7.2.1.1','.1.3.6.1.4.1.171.11.64.1.2.7.2.1.2','.1.3.6.1.4.1.171.11.64.1.2.7.2.1.3','.1.3.6.1.4.1.171.11.64.1.2.7.2.1.4','.1.3.6.1.4.1.171.11.64.1.2.7.2.1.5','.1.3.6.1.4.1.171.11.64.1.2.7.2.1.6','.1.3.6.1.4.1.171.11.64.1.2.7.3.1.1','.1.3.6.1.4.1.171.11.64.1.2.7.3.1.2',``,'.1.3.6.1.4.1.171.11.64.1.2.7.3.1.3','.1.3.6.1.4.1.171.11.64.1.2.7.3.1.4','.1.3.6.1.4.1.171.11.64.1.2.7.3.1.5'), " .
+ 				" (6,'DES-3828',0,'scan_dlink_universal','2','.1.3.6.1.4.1.171.12.23.1.2.0','.1.3.6.1.4.1.171.12.23.1.1.0','.1.3.6.1.4.1.171.12.1.2.6.0','.1.3.6.1.2.1.2.2.1.1','.1.3.6.1.2.1.2.2.1.2','.1.3.6.1.2.1.2.2.1.3','.1.3.6.1.2.1.2.2.1.5','.1.3.6.1.2.1.2.2.1.8','.1.3.6.1.4.1.171.12.23.3.2.1.2','.1.3.6.1.4.1.171.12.23.3.2.1.3','.1.3.6.1.2.1.31.1.1.1.18','.1.3.6.1.4.1.171.12.23.4.1.1.1','.1.3.6.1.4.1.171.12.23.4.1.1.2','.1.3.6.1.4.1.171.12.23.4.1.1.3','.1.3.6.1.4.1.171.12.23.4.1.1.4','.1.3.6.1.4.1.171.12.23.4.1.1.5','.1.3.6.1.4.1.171.12.23.4.1.1.6','.1.3.6.1.4.1.171.12.23.4.2.1.1','.1.3.6.1.4.1.171.12.23.4.2.1.2',``,'.1.3.6.1.4.1.171.12.23.4.2.1.3','.1.3.6.1.4.1.171.12.23.4.2.1.4','.1.3.6.1.4.1.171.12.23.4.2.1.5'); ");
+ 			$old = '0.0.19b'; 		  
+ 	case '0.0.19b': 
+ 		$sql[] = array("dimpb_modify_column","imb_temp_ports","port_active", "ALTER TABLE `imb_temp_ports` MODIFY COLUMN `port_active` CHAR(2) NOT NULL DEFAULT 0;");
+ 		$sql[] = array("dimpb_execute_sql","Change colmun name macip_imb_state => macip_imb_status in table [imb_macip]", "ALTER TABLE `imb_macip` CHANGE COLUMN `macip_imb_state` `macip_imb_status`  TINYINT NOT NULL DEFAULT '-1'");
+ 		$sql[] = array("dimpb_execute_sql","Change colmun name macip_imb_state => macip_imb_status in table [imb_temp_macip]", "ALTER TABLE `imb_temp_macip` CHANGE COLUMN `macip_imb_state` `macip_imb_status`  TINYINT NOT NULL DEFAULT '-1'");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		$sql[] = array("dimpb_add_column","imb_macip","macip_mode","ALTER TABLE `imb_macip` ADD COLUMN `macip_mode` TINYINT NOT NULL DEFAULT '-1' after macip_imb_status;");
  		$sql[] = array("dimpb_add_column","imb_temp_macip","macip_mode","ALTER TABLE `imb_temp_macip` ADD COLUMN `macip_mode` TINYINT NOT NULL DEFAULT '-1' after macip_imb_status;");
  		$sql[] = array("dimpb_add_column","imb_macip","macip_imb_action","ALTER TABLE `imb_macip` ADD COLUMN `macip_imb_action` TINYINT NOT NULL DEFAULT '-1' after macip_imb_status;");
@@ -2187,12 +2742,22 @@ function impb_setup_table () {
      case '0.0.198b': 
  		$sql[] = array("dimpb_add_column","imb_macip","macip_banned","ALTER TABLE `imb_macip` ADD COLUMN `macip_banned` TINYINT NOT NULL DEFAULT '0' after macip_imb_status;");
  		$sql[] = array("dimpb_add_column","imb_temp_blmacinfo","blmacinfo_banned","ALTER TABLE `imb_temp_blmacinfo` ADD COLUMN `blmacinfo_banned` TINYINT NOT NULL DEFAULT '0' after blmacinfo_cor_ip;");
+<<<<<<< HEAD
+=======
+ 		$old = '0.0.199b'; 
+     case '0.0.199b': 
+ 		$sql[] = array("dimpb_add_column","imb_device_types","type_imb_create_macip","ALTER TABLE `imb_device_types` ADD COLUMN `type_imb_create_macip` TINYINT NOT NULL DEFAULT '1' after snmp_oid_ifAlias;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		$old = '0.0.2b'; 
      case '0.0.2b': 
  		$sql[] = array("dimpb_add_column","imb_mactrack_recent_ports","imb_device_id","ALTER TABLE `imb_mactrack_recent_ports` ADD COLUMN `imb_device_id` int(10) unsigned NOT NULL default '0' after `device_id`;");
  		$sql[] = array("dimpb_add_column","imb_macip","macip_active_last_poll","ALTER TABLE `imb_macip` ADD COLUMN `macip_active_last_poll`  tinyint(4) NOT NULL DEFAULT '0';");
  		$old = '0.0.21b'; 
      case '0.0.21b': 
+<<<<<<< HEAD
+=======
+ 		$sql[] = array("dimpb_add_column","imb_device_types","type_imb_zerrostate_mode","ALTER TABLE `imb_device_types` ADD COLUMN `type_imb_zerrostate_mode` tinyint(4) NOT NULL default '1' after `snmp_oid_en_MacBindingZerroIpPortState`;");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		$sql[] = array("dimpb_create_table","imb_banip","CREATE TABLE  `imb_banip` ( " .
  			" `banip_id` int(10) unsigned NOT NULL auto_increment, " .
  			" `banip_ipaddr` varchar(20) NOT NULL default '', " .
@@ -2212,12 +2777,34 @@ function impb_setup_table () {
  			" PRIMARY KEY  (`banip_ipaddr`), " .
  			" KEY `banip_id` (`banip_id`) " .
  			" ) ENGINE=MyISAM;");
+<<<<<<< HEAD
  		$old = '0.0.25b'; 
     case '0.0.25b': 
+=======
+ 		$old = '0.0.22b'; 
+     case '0.0.22b': 
+ 		$sql[] = array("dimpb_add_column","imb_device_types","snmp_timeout_agentSaveCfg","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_timeout_agentSaveCfg` tinyint(4) NOT NULL default '2' after `snmp_oid_agentSaveCfg`;");
+ 		$old = '0.0.23b'; 	
+     case '0.0.23b': 
+ 		$sql[] = array("dimpb_add_column","imb_device_types","setting_imb_def_mode","ALTER TABLE `imb_device_types` ADD COLUMN `setting_imb_def_mode` tinyint(4) NOT NULL default '1' after `snmp_oid_BindingBlockedType`;");
+ 		$sql[] = array("dimpb_execute_sql","Update values for new column [setting_imb_def_mode]", "UPDATE imb_device_types SET `setting_imb_def_mode`=2 where `description` LIKE '%35%';");
+ 		$sql[] = array("dimpb_execute_sql","Update values for new column [snmp_timeout_agentSaveCfg]", "UPDATE imb_device_types SET `snmp_timeout_agentSaveCfg`=32 where `description` LIKE '%35%' OR `description` LIKE '%38%';");
+ 		$old = '0.0.24b'; 	
+     case '0.0.24b': 
+ 		$sql[] = array("dimpb_add_column","imb_device_types","setting_imb_use_autoban","ALTER TABLE `imb_device_types` ADD COLUMN `setting_imb_use_autoban` tinyint(4) NOT NULL default '0' after `setting_imb_def_mode`;");
+ 		$old = '0.0.25b';		
+     case '0.0.25b': 
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		$sql[] = array("dimpb_add_index", "imb_macip",  "ip_on_device", "ALTER TABLE `imb_macip` ADD UNIQUE KEY `ip_on_device` (`device_id`,`macip_ipaddr`);");
  		$sql[] = array("dimpb_add_index", "imb_macip",  "macip_ipaddr", "ALTER TABLE `imb_macip` ADD INDEX `macip_ipaddr`(`macip_ipaddr`);");
  		$old = '0.0.26b';	
      case '0.0.26b': 
+<<<<<<< HEAD
+=======
+ 		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_Trap_eventid","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_Trap_eventid` varchar(100) NOT NULL default '.1.3.6.1.4.1.171.11.64.1.2.15.3.0.3' after `snmp_oid_MacBindingTrapLogState`;");
+ 		$sql[] = array("dimpb_execute_sql","Update values for new column [snmp_oid_Trap_eventid] for DES-38xx series", "UPDATE imb_device_types SET `snmp_oid_Trap_eventid`='.1.3.6.1.4.1.171.12.23.5.0.5' where `description` LIKE '%38%';");
+ 		$sql[] = array("dimpb_execute_sql","Update values for new column [snmp_oid_Trap_eventid] for DES-30xx series", "UPDATE imb_device_types SET `snmp_oid_Trap_eventid`='.1.3.6.1.4.1.171.12.23.5.0.1' where `description` LIKE '%30%';");		
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		$sql[] = array("dimpb_create_table","imb_traps_blocked","CREATE TABLE  `imb_traps_blocked` ( " .
  			"`traps_id` int(10) unsigned NOT NULL auto_increment, " .
  			"`traps_hostname` varchar(20) NOT NULL default '', " .
@@ -2234,6 +2821,15 @@ function impb_setup_table () {
  		$sql[] = array("dimpb_add_column","imb_traps_blocked","traps_device_id","alter table `imb_traps_blocked` add column `traps_device_id` int(10) unsigned NOT NULL default '0';");				
  		$old = '0.0.28b';	
  	case '0.0.28b': 
+<<<<<<< HEAD
+=======
+ 		$sql[] = array("dimpb_add_column","imb_device_types","type_port_use_long","ALTER TABLE `imb_device_types` ADD COLUMN `type_port_use_long` char(2) NOT NULL default '0' after `type_port_num_conversion`;");
+ 		$sql[] = array("dimpb_add_column","imb_device_types","snmp_value_save_cfg","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_value_save_cfg` char(2) NOT NULL default '3' after `snmp_oid_agentSaveCfg`;");
+ 		$sql[] = array("dimpb_add_column","imb_device_types","type_imb_MacBindingPortState","ALTER TABLE `imb_device_types` ADD COLUMN `type_imb_MacBindingPortState` char(2) NOT NULL default '1' after `snmp_oid_MacBindingPortState`;");
+ 		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_swL2IpMacBindingFwdDCHPPackState","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_swL2IpMacBindingFwdDCHPPackState` varchar(100) default '' after `snmp_timeout_agentSaveCfg`;");	
+ 		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_en_fwd_dhcp_packets_state","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_en_fwd_dhcp_packets_state` varchar(100) default '' after `type_imb_zerrostate_mode`;");	
+ 		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_max_entry_count","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_max_entry_count` varchar(100) default '' after `snmp_oid_en_fwd_dhcp_packets_state`;");	
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		$sql[] = array("dimpb_add_column","imb_temp_ports","port_max_entry","ALTER TABLE `imb_temp_ports` ADD COLUMN `port_max_entry` INTEGER(2) UNSIGNED NOT NULL DEFAULT '0' ;");		
  		$sql[] = array("dimpb_add_column","imb_ports","port_max_entry","ALTER TABLE `imb_ports` ADD COLUMN `port_max_entry` INTEGER(2) UNSIGNED NOT NULL DEFAULT '0' ;");		
  		$sql[] = array("dimpb_add_column","imb_temp_ports","port_enab_dhcp_fwd","ALTER TABLE `imb_temp_ports` ADD COLUMN `port_enab_dhcp_fwd` INTEGER(2) UNSIGNED NOT NULL DEFAULT '0' AFTER `port_zerroip_state`;");		
@@ -2242,7 +2838,12 @@ function impb_setup_table () {
  		$old = '0.1.01b';	
  	case '0.1.01b': 
  		$sql[] = array("dimpb_add_index", "imb_mactrack_recent_ports",  "device_port", "ALTER TABLE `imb_mactrack_recent_ports` ADD INDEX `device_port`(`device_id`, `port_number`);");
+<<<<<<< HEAD
 
+=======
+ 		$sql[] = array("dimpb_execute_sql","INSERT INTO [imb_device_types] data for some device's type","INSERT INTO `imb_device_types` (`description`,`cacti_host_template_id`,`scanning_function`,`type_port_num_conversion`,`type_port_use_long`,`snmp_oid_MacBindingACLMode`,`snmp_oid_MacBindingTrapLogState`,`snmp_oid_Trap_eventid`,`snmp_oid_agentSaveCfg`,`snmp_value_save_cfg`,`snmp_timeout_agentSaveCfg`,`snmp_oid_swL2IpMacBindingFwdDCHPPackState`,`snmp_oid_ifIndex`,`snmp_oid_ifDescr`,`snmp_oid_ifType`,`snmp_oid_ifSpeed`,`snmp_oid_ifOperStatus`,`snmp_oid_MacBindingPortState`,`type_imb_MacBindingPortState`,`snmp_oid_en_MacBindingZerroIpPortState`,`type_imb_zerrostate_mode`,`snmp_oid_en_fwd_dhcp_packets_state`,`snmp_oid_max_entry_count`,`snmp_oid_ifAlias`,`type_imb_create_macip`,`snmp_oid_MacBindingIpIndex`,`snmp_oid_MacBindingMac`,`snmp_oid_MacBindingStatus`,`snmp_oid_MacBindingPorts`,`snmp_oid_MacBindingAction`,`type_imb_action`,`snmp_oid_MacBindingMode`,`type_imb_mode`,`snmp_oid_MacBindingBlockedVID`,`snmp_oid_MacBindingBlockedMac`,`snmp_oid_MacBindingBlockedIP`,`snmp_oid_MacBindingBlockedVlanName`,`snmp_oid_MacBindingBlockedPort`,`snmp_oid_BindingBlockedType`,`setting_imb_def_mode`,`setting_imb_use_autoban`) VALUES " . 
+				" ('DES-3028',0,'scan_dlink_universal','2','1','.1.3.6.1.4.1.171.12.23.1.5.0','.1.3.6.1.4.1.171.12.23.1.1.0','.1.3.6.1.4.1.171.12.23.4.1.1.1','.1.3.6.1.4.1.171.12.1.2.6.0','2',2,'.1.3.6.1.4.1.171.12.23.1.4.0','.1.3.6.1.2.1.2.2.1.1','.1.3.6.1.2.1.2.2.1.2','.1.3.6.1.2.1.2.2.1.3','.1.3.6.1.2.1.2.2.1.5','.1.3.6.1.2.1.2.2.1.8','.1.3.6.1.4.1.171.12.23.3.2.1.2','2','.1.3.6.1.4.1.171.12.23.3.2.1.3',1,'.1.3.6.1.4.1.171.12.23.3.2.1.4','.1.3.6.1.4.1.171.12.23.3.2.1.5','.1.3.6.1.2.1.31.1.1.1.18',2,'.1.3.6.1.4.1.171.12.23.4.1.1.1','.1.3.6.1.4.1.171.12.23.4.1.1.2','.1.3.6.1.4.1.171.12.23.4.1.1.3','.1.3.6.1.4.1.171.12.23.4.1.1.4','.1.3.6.1.4.1.171.12.23.4.1.1.5',1,'',1,'.1.3.6.1.4.1.171.12.23.4.2.1.1','.1.3.6.1.4.1.171.12.23.4.2.1.2',``,'.1.3.6.1.4.1.171.12.23.4.2.1.3','.1.3.6.1.4.1.171.12.23.4.2.1.4','.1.3.6.1.4.1.171.12.23.4.2.1.5',1,0);");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		
  		$old = '0.1.02b';	
  	case '0.1.02b': 
@@ -2260,18 +2861,59 @@ function impb_setup_table () {
  			"PRIMARY KEY  (`net_id`) " .
  			") ENGINE=MyISAM;");
  		
+<<<<<<< HEAD
 		$old = '0.1.3b';
  	case '0.1.3b': 
  		$sql[] = array("dimpb_add_column","imb_auto_updated_nets","net_ttl",  "ALTER TABLE `imb_auto_updated_nets` ADD COLUMN `net_ttl`   tinyint(2) NOT NULL default '0';");			
  		$old = '0.1.47b';
      case '0.1.47b': 
  		$sql[] = array("dimpb_add_column","imb_macip","macip_may_move","ALTER TABLE `imb_macip` ADD COLUMN `macip_may_move`  tinyint(1) NOT NULL DEFAULT '0';");
+=======
+		$sql[] = array("dimpb_add_column","imb_device_types","setting_imb_use_auto_unblock","ALTER TABLE `imb_device_types` ADD COLUMN `setting_imb_use_auto_unblock` tinyint(1) NOT NULL default '0';");
+ 		$sql[] = array("dimpb_add_column","imb_device_types","setting_imb_use_auto_add",  "ALTER TABLE `imb_device_types` ADD COLUMN `setting_imb_use_auto_add`   tinyint(1) NOT NULL default '0';");			
+		$sql[] = array("dimpb_add_column","imb_device_types","setting_imb_use_reenable_onport",  "ALTER TABLE `imb_device_types` ADD COLUMN `setting_imb_use_reenable_onport`   tinyint(1) NOT NULL default '0';");			
+ 		
+		$old = '0.1.3b';
+ 	case '0.1.3b': 
+ 		$sql[] = array("dimpb_add_column","imb_auto_updated_nets","net_ttl",  "ALTER TABLE `imb_auto_updated_nets` ADD COLUMN `net_ttl`   tinyint(2) NOT NULL default '0';");			
+ 		$old = '0.1.31b';
+ 	case '0.1.31b': 
+		$sql[] = array("dimpb_execute_sql","INSERT INTO [imb_device_types] data for some device's type","INSERT INTO `imb_device_types` (`device_type_id`,`description`,`cacti_host_template_id`,`scanning_function`,`type_port_num_conversion`,`type_port_use_long`,`snmp_oid_MacBindingACLMode`,`snmp_oid_MacBindingTrapLogState`,`snmp_oid_Trap_eventid`,`snmp_oid_agentSaveCfg`,`snmp_value_save_cfg`,`snmp_timeout_agentSaveCfg`,`snmp_oid_swL2IpMacBindingFwdDCHPPackState`,`snmp_oid_ifIndex`,`snmp_oid_ifDescr`,`snmp_oid_ifType`,`snmp_oid_ifSpeed`,`snmp_oid_ifOperStatus`,`snmp_oid_MacBindingPortState`,`type_imb_MacBindingPortState`,`snmp_oid_en_MacBindingZerroIpPortState`,`type_imb_zerrostate_mode`,`snmp_oid_en_fwd_dhcp_packets_state`,`snmp_oid_max_entry_count`,`snmp_oid_ifAlias`,`type_imb_create_macip`,`snmp_oid_MacBindingIpIndex`,`snmp_oid_MacBindingMac`,`snmp_oid_MacBindingStatus`,`snmp_oid_MacBindingPorts`,`snmp_oid_MacBindingAction`,`type_imb_action`,`snmp_oid_MacBindingMode`,`type_imb_mode`,`snmp_oid_MacBindingBlockedVID`,`snmp_oid_MacBindingBlockedMac`,`snmp_oid_MacBindingBlockedIP`,`snmp_oid_MacBindingBlockedVlanName`,`snmp_oid_MacBindingBlockedPort`,`snmp_oid_BindingBlockedType`,`setting_imb_def_mode`,`setting_imb_use_autoban`,`setting_imb_use_auto_unblock`,`setting_imb_use_auto_add`,`setting_imb_use_reenable_onport`) VALUES  " .
+				" (8,'DES-30xx NEW',0,'scan_dlink_universal','1','0','','.1.3.6.1.4.1.171.12.23.1.1.0','.1.3.6.1.4.1.171.12.23.5.0.1','.1.3.6.1.4.1.171.12.1.2.6.0','3',4,'','.1.3.6.1.2.1.2.2.1.1','.1.3.6.1.2.1.2.2.1.2','.1.3.6.1.2.1.2.2.1.3','.1.3.6.1.2.1.2.2.1.5','.1.3.6.1.2.1.2.2.1.8','.1.3.6.1.4.1.171.12.23.3.2.1.2','1','.1.3.6.1.4.1.171.12.23.3.2.1.3',1,'','','.1.3.6.1.2.1.31.1.1.1.18',1,'.1.3.6.1.4.1.171.12.23.4.1.1.1','.1.3.6.1.4.1.171.12.23.4.1.1.2','.1.3.6.1.4.1.171.12.23.4.1.1.3','.1.3.6.1.4.1.171.12.23.4.1.1.4','',2,'',2,'.1.3.6.1.4.1.171.12.23.4.2.1.1','.1.3.6.1.4.1.171.12.23.4.2.1.2',``,'.1.3.6.1.4.1.171.12.23.4.2.1.3','.1.3.6.1.4.1.171.12.23.4.2.1.4','.1.3.6.1.4.1.171.12.23.4.2.1.5',1,0,0,0,0); ");
+ 		$old = '0.1.4b';
+ 	case '0.1.4b': 
+		$sql[] = array("dimpb_execute_sql","INSERT INTO [imb_device_types] data for some device's type","INSERT INTO `imb_device_types` (`description`,`cacti_host_template_id`,`scanning_function`,`type_port_num_conversion`,`type_port_use_long`,`snmp_oid_MacBindingACLMode`,`snmp_oid_MacBindingTrapLogState`,`snmp_oid_Trap_eventid`,`snmp_oid_agentSaveCfg`,`snmp_value_save_cfg`,`snmp_timeout_agentSaveCfg`,`snmp_oid_swL2IpMacBindingFwdDCHPPackState`,`snmp_oid_ifIndex`,`snmp_oid_ifDescr`,`snmp_oid_ifType`,`snmp_oid_ifSpeed`,`snmp_oid_ifOperStatus`,`snmp_oid_MacBindingPortState`,`type_imb_MacBindingPortState`,`snmp_oid_en_MacBindingZerroIpPortState`,`type_imb_zerrostate_mode`,`snmp_oid_en_fwd_dhcp_packets_state`,`snmp_oid_max_entry_count`,`snmp_oid_ifAlias`,`type_imb_create_macip`,`snmp_oid_MacBindingIpIndex`,`snmp_oid_MacBindingMac`,`snmp_oid_MacBindingStatus`,`snmp_oid_MacBindingPorts`,`snmp_oid_MacBindingAction`,`type_imb_action`,`snmp_oid_MacBindingMode`,`type_imb_mode`,`snmp_oid_MacBindingBlockedVID`,`snmp_oid_MacBindingBlockedMac`,`snmp_oid_MacBindingBlockedIP`,`snmp_oid_MacBindingBlockedVlanName`,`snmp_oid_MacBindingBlockedPort`,`snmp_oid_BindingBlockedType`,`setting_imb_def_mode`,`setting_imb_use_autoban`,`setting_imb_use_auto_unblock`,`setting_imb_use_auto_add`,`setting_imb_use_reenable_onport`) VALUES  " .
+				" ('DES-30xx NEW',0,'scan_dlink_universal','1','0','','.1.3.6.1.4.1.171.12.23.1.1.0','.1.3.6.1.4.1.171.12.23.5.0.1','.1.3.6.1.4.1.171.12.1.2.6.0','3',4,'','.1.3.6.1.2.1.2.2.1.1','.1.3.6.1.2.1.2.2.1.2','.1.3.6.1.2.1.2.2.1.3','.1.3.6.1.2.1.2.2.1.5','.1.3.6.1.2.1.2.2.1.8','.1.3.6.1.4.1.171.12.23.3.2.1.2','1','.1.3.6.1.4.1.171.12.23.3.2.1.3',1,'','','.1.3.6.1.2.1.31.1.1.1.18',1,'.1.3.6.1.4.1.171.12.23.4.1.1.1','.1.3.6.1.4.1.171.12.23.4.1.1.2','.1.3.6.1.4.1.171.12.23.4.1.1.3','.1.3.6.1.4.1.171.12.23.4.1.1.4','',2,'',2,'.1.3.6.1.4.1.171.12.23.4.2.1.1','.1.3.6.1.4.1.171.12.23.4.2.1.2',``,'.1.3.6.1.4.1.171.12.23.4.2.1.3','.1.3.6.1.4.1.171.12.23.4.2.1.4','.1.3.6.1.4.1.171.12.23.4.2.1.5',1,0,0,0,0); ");
+ 		$old = '0.1.45b';
+ 	case '0.1.45b': 
+ 		$old = '0.1.47b';
+     case '0.1.47b': 
+ 		$sql[] = array("dimpb_add_column","imb_macip","macip_may_move","ALTER TABLE `imb_macip` ADD COLUMN `macip_may_move`  tinyint(1) NOT NULL DEFAULT '0';");
+ 		$old = '0.1.5'; 
+     case '0.1.5': 
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		$old = '0.1.6'; 
      case '0.1.6': 
  		$sql[] = array("dimpb_add_column","imb_blmacs","blmac_done","alter table `imb_blmacs` add column `blmac_done` tinyint(1) NOT NULL default '0';");
 		$sql[] = array("dimpb_add_column","imb_blmacs","blmac_info","alter table `imb_blmacs` add column `blmac_info` varchar(60) default '';");
+<<<<<<< HEAD
  		$old = '0.1.8'; 
      case '0.1.8': 
+=======
+ 		$old = '0.1.61'; 
+     case '0.1.61': 
+ 		$sql[] = array("dimpb_add_column","imb_device_types","type_use_more_32x_port","ALTER TABLE `imb_device_types` ADD COLUMN `type_use_more_32x_port` char(2) NOT NULL default '0';");		
+		$old = '0.1.7'; 
+     case '0.1.7': 
+ 		$sql[] = array("dimpb_add_column","imb_device_types","setting_imb_use_auto_change",  "ALTER TABLE `imb_device_types` ADD COLUMN `setting_imb_use_auto_change`   tinyint(1) NOT NULL default '0';");			
+		$old = '0.1.8'; 
+     case '0.1.8': 
+ 		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_en_swIpMacBindingPortARPInspection","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_en_swIpMacBindingPortARPInspection` varchar(100) NOT NULL default '' after type_imb_zerrostate_mode;");		
+ 		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_en_swIpMacBindingPortIPInspection","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_en_swIpMacBindingPortIPInspection` varchar(100) NOT NULL default '' after snmp_oid_en_swIpMacBindingPortARPInspection;");				
+		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_en_swIpMacBindingPortIPProtocol","ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_en_swIpMacBindingPortIPProtocol` varchar(100) NOT NULL default '' after snmp_oid_en_swIpMacBindingPortIPInspection;");				
+		$sql[] = array("dimpb_add_column","imb_device_types","impb_func_version","ALTER TABLE `imb_device_types` ADD COLUMN `impb_func_version` varchar(2) NOT NULL default '0' after scanning_function;");				
+		
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		$sql[] = array("dimpb_add_column","imb_temp_ports","port_arp_inspection","ALTER TABLE `imb_temp_ports` ADD COLUMN `port_arp_inspection` tinyint(1) DEFAULT '0' after port_zerroip_state ;");
 		$sql[] = array("dimpb_add_column","imb_temp_ports","port_ip_inspection","ALTER TABLE `imb_temp_ports` ADD COLUMN `port_ip_inspection` tinyint(1) DEFAULT '0' after port_arp_inspection ;");
 		$sql[] = array("dimpb_add_column","imb_temp_ports","port_ip_protocol","ALTER TABLE `imb_temp_ports` ADD COLUMN `port_ip_protocol` tinyint(1) DEFAULT '0' after port_ip_inspection ;");
@@ -2283,11 +2925,22 @@ function impb_setup_table () {
 		$sql[] = array("dimpb_modify_column","imb_macip","macip_index","ALTER TABLE `imb_macip` MODIFY COLUMN `macip_index` VARCHAR(40) ;");
 		$sql[] = array("dimpb_modify_column","imb_temp_macip","macip_index","ALTER TABLE `imb_temp_macip` MODIFY COLUMN `macip_index` VARCHAR(40) ;");
 		$sql[] = array("dimpb_add_column","imb_temp_blmacs","blmac_ip","alter table `imb_temp_blmacs` add column `blmac_ip` varchar(20) NOT NULL default '' after blmac_macaddr;");
+<<<<<<< HEAD
+=======
+		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_MacBindingBlockedIP",  "ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_MacBindingBlockedIP`   varchar(100) NOT NULL default '' after snmp_oid_MacBindingBlockedMAC;");			
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 		$old = '0.2.0'; 		
 	case '0.2.0':
 		$sql[] = array("dimpb_add_column","imb_temp_ports","port_status_last_change","ALTER TABLE `imb_temp_ports` ADD COLUMN `port_status_last_change` datetime NOT NULL default '0000-00-00 00:00:00' after `scan_date`;");
 		$sql[] = array("dimpb_add_column","imb_ports","port_status_last_change","ALTER TABLE `imb_ports` ADD COLUMN `port_status_last_change` datetime NOT NULL default '0000-00-00 00:00:00' after `scan_date`;");
 		$old = '0.2.1'; 		
+<<<<<<< HEAD
+=======
+	case '0.2.0':
+		$sql[] = array("dimpb_add_column","imb_temp_ports","port_status_last_change","ALTER TABLE `imb_temp_ports` ADD COLUMN `port_status_last_change` datetime NOT NULL default '0000-00-00 00:00:00' after `scan_date`;");
+		$sql[] = array("dimpb_add_column","imb_ports","port_status_last_change","ALTER TABLE `imb_ports` ADD COLUMN `port_status_last_change` datetime NOT NULL default '0000-00-00 00:00:00' after `scan_date`;");
+		$old = '0.2.1'; 		
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
 	case '0.2.1':
 		$sql[] = array("dimpb_modify_column","imb_auto_updated_nets","net_ttl","ALTER TABLE `imb_auto_updated_nets` MODIFY COLUMN `net_ttl` INT(10) UNSIGNED NOT NULL DEFAULT 0;");
 		$old = '0.2.2'; 		
@@ -2314,7 +2967,20 @@ function impb_setup_table () {
 
 		$sql[] = array("dimpb_add_column","imb_temp_ports","port_LoopVLAN","ALTER TABLE `imb_temp_ports` ADD COLUMN `port_LoopVLAN` VARCHAR(40) NOT NULL DEFAULT '0';");
 		$sql[] = array("dimpb_add_column","imb_ports","port_LoopVLAN","ALTER TABLE `imb_ports` ADD COLUMN `port_LoopVLAN` VARCHAR(40) NOT NULL DEFAULT '0';");
+<<<<<<< HEAD
 		$old = '0.5'; 
+=======
+
+		
+		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_swL2PortCtrlAdminState",  "ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_swL2PortCtrlAdminState`   varchar(100) NOT NULL default '';");
+		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_swL2PortCtrlSpeedState",  "ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_swL2PortCtrlSpeedState`   varchar(100) NOT NULL default '';");			
+		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_swL2PortSpeedStatus",  "ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_swL2PortSpeedStatus`   varchar(100) NOT NULL default '';");			
+		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_swL2LoopDetectPortState",  "ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_swL2LoopDetectPortState`   varchar(100) NOT NULL default '';");
+		$sql[] = array("dimpb_add_column","imb_device_types","snmp_oid_swL2LoopDetectPortLoopVLAN",  "ALTER TABLE `imb_device_types` ADD COLUMN `snmp_oid_swL2LoopDetectPortLoopVLAN`   varchar(100) NOT NULL default '';");
+		$sql[] = array("dimpb_add_column","imb_device_types","swL2PortErrPortReason",  "ALTER TABLE `imb_device_types` ADD COLUMN `swL2PortErrPortReason`   varchar(100) NOT NULL default '';");					
+		$sql[] = array("dimpb_add_column","imb_device_types","type_revision","ALTER TABLE `imb_device_types` ADD COLUMN `type_revision` char(2) NOT NULL default '1';");
+		$old = '0.4'; 			
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	}		
 
 	
@@ -2352,7 +3018,11 @@ function impb_setup_table () {
  		}
  	}
  
+<<<<<<< HEAD
  db_execute('REPLACE INTO settings (name, value) VALUES ("impb_version", "' .  $new . '")');
+=======
+ 
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  }
  
  function dimpb_execute_sql($message, $syntax) {
@@ -2559,6 +3229,7 @@ function impb_setup_table () {
  	return $return_rezult;
  }
  	
+<<<<<<< HEAD
 function impb_db_table_exists($table) {
 	return sizeof(db_fetch_assoc("SHOW TABLES LIKE '$table'"));
 }
@@ -2580,5 +3251,7 @@ function impb_db_column_exists($table, $column) {
 
 	return $found;
 }
+=======
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  	
  	?>

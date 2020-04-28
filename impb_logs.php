@@ -16,7 +16,11 @@
  */
  chdir('../../');
  include("./include/auth.php");
+<<<<<<< HEAD
   include_once($config["base_path"] . "/plugins/impb/lib/impb_functions.php");
+=======
+  include_once($config["base_path"] . "/plugins/impblinding/lib/impblinding_functions.php");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  define("MAX_DISPLAY_PAGES", 21);
  $logs_actions = array(
@@ -36,11 +40,19 @@
    default:
  	$title = "D-Link IP-MAC-Port Blinding  -  Просмотр Журнала операций.";
  	include_once("./include/top_header.php");
+<<<<<<< HEAD
  	impb_view_logs();
  	include_once("./include/bottom_footer.php");
  }
  
  function impb_view_logs() {
+=======
+ 	impblinding_view_logs();
+ 	include_once("./include/bottom_footer.php");
+ }
+ 
+ function impblinding_view_logs() {
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
      global $title, $colors, $config, $logs_actions, $realm_id, $imp_timespans;
  
      /* ================= input validation ================= */
@@ -87,11 +99,19 @@
      }else{
          /* if any of the settings changed, reset the page number */
          $changed = 0;
+<<<<<<< HEAD
          $changed += impb_check_changed("l_device_id", "sess_impb_view_logs_device_id");
  		$changed += impb_check_changed("l_user_id", "sess_impb_view_logs_user_id");
  		$changed += impb_check_changed("l_date", "sess_impb_view_logs_date");
  		$changed += impb_check_changed("l_save", "sess_impb_view_logs_save");
  		$changed += impb_check_changed("l_filter", "sess_impb_view_logs_filter");
+=======
+         $changed += impblinding_check_changed("l_device_id", "sess_impb_view_logs_device_id");
+ 		$changed += impblinding_check_changed("l_user_id", "sess_impb_view_logs_user_id");
+ 		$changed += impblinding_check_changed("l_date", "sess_impb_view_logs_date");
+ 		$changed += impblinding_check_changed("l_save", "sess_impb_view_logs_save");
+ 		$changed += impblinding_check_changed("l_filter", "sess_impb_view_logs_filter");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
          if ($changed) {
              $_REQUEST["page"] = "1";
@@ -114,21 +134,35 @@
      load_current_session_value("sort_column", "sess_impb_view_logs_sort_column", "description");
      load_current_session_value("sort_direction", "sess_impb_view_logs_sort_direction", "ASC");	
          
+<<<<<<< HEAD
      //impb_view_header();
  
      //impb_view_footer();
+=======
+     //impblinding_view_header();
+ 
+     //impblinding_view_footer();
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  	
  	html_start_box("<strong>D-Link IP-MAC-Port Blinding Logs Filters</strong>", "98%", $colors["header"], "3", "center","");
  
+<<<<<<< HEAD
  	include("plugins/impblinding/html/inc_impb_log_filter_table.php");
+=======
+ 	include("plugins/impblinding/html/inc_impblinding_log_filter_table.php");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  	html_end_box();	
  	
  	
      $sql_where = "";
  
+<<<<<<< HEAD
      $logs = impb_view_get_logs_records($sql_where);
+=======
+     $logs = impblinding_view_get_logs_records($sql_where);
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
          $total_rows = db_fetch_cell("SELECT
              COUNT(imb_log.log_id)
              FROM imb_log
@@ -136,20 +170,32 @@
  
  html_start_box("", "98%", $colors["header"], "3", "center", "");
      /* generate page list */
+<<<<<<< HEAD
      $url_page_select = str_replace("&page", "?page", get_page_list($_REQUEST["l_page"], MAX_DISPLAY_PAGES, read_config_option("dimpb_num_rows"), $total_rows, "impb_logs.php"));
+=======
+     $url_page_select = str_replace("&page", "?page", get_page_list($_REQUEST["l_page"], MAX_DISPLAY_PAGES, read_config_option("dimpb_num_rows"), $total_rows, "impblinding_logs.php"));
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
      $nav = "<tr bgcolor='#" . $colors["header"] . "'>
              <td colspan='10'>
                  <table width='100%' cellspacing='0' cellpadding='0' border='0'>
                      <tr>
                          <td align='left' class='textHeaderDark'>
+<<<<<<< HEAD
                              <strong>&lt;&lt; "; if ($_REQUEST["l_page"] > 1) { $nav .= "<a class='linkOverDark' href='impb_logs.php?page=" . ($_REQUEST["l_page"]-1) . "'>"; } $nav .= "Previous"; if ($_REQUEST["l_page"] > 1) { $nav .= "</a>"; } $nav .= "</strong>
+=======
+                             <strong>&lt;&lt; "; if ($_REQUEST["l_page"] > 1) { $nav .= "<a class='linkOverDark' href='impblinding_logs.php?page=" . ($_REQUEST["l_page"]-1) . "'>"; } $nav .= "Previous"; if ($_REQUEST["l_page"] > 1) { $nav .= "</a>"; } $nav .= "</strong>
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
                          </td>\n
                          <td align='center' class='textHeaderDark'>
                              Showing Rows " . ((read_config_option("dimpb_num_rows")*($_REQUEST["l_page"]-1))+1) . " to " . ((($total_rows < read_config_option("dimpb_num_rows")) || ($total_rows < (read_config_option("dimpb_num_rows")*$_REQUEST["l_page"]))) ? $total_rows : (read_config_option("dimpb_num_rows")*$_REQUEST["l_page"])) . " of $total_rows [$url_page_select]
                          </td>\n
                          <td align='right' class='textHeaderDark'>
+<<<<<<< HEAD
                              <strong>"; if (($_REQUEST["l_page"] * read_config_option("dimpb_num_rows")) < $total_rows) { $nav .= "<a class='linkOverDark' href='impb_logs.php?page=" . ($_REQUEST["l_page"]+1) . "'>"; } $nav .= "Next"; if (($_REQUEST["l_page"] * read_config_option("dimpb_num_rows")) < $total_rows) { $nav .= "</a>"; } $nav .= " &gt;&gt;</strong>
+=======
+                             <strong>"; if (($_REQUEST["l_page"] * read_config_option("dimpb_num_rows")) < $total_rows) { $nav .= "<a class='linkOverDark' href='impblinding_logs.php?page=" . ($_REQUEST["l_page"]+1) . "'>"; } $nav .= "Next"; if (($_REQUEST["l_page"] * read_config_option("dimpb_num_rows")) < $total_rows) { $nav .= "</a>"; } $nav .= " &gt;&gt;</strong>
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
                          </td>\n
                      </tr>
                  </table>
@@ -204,12 +250,21 @@
              print "<tr><td><em>Журнал операций пуст</em></td></tr>";
          }
          html_end_box(false);
+<<<<<<< HEAD
  		impb_draw_actions_dropdown($logs_actions, "logs");
          //impb_draw_actions_dropdown($port_actions, "logs");
  
  }
  
  function impb_view_get_logs_records(&$sql_where, $apply_limits = TRUE) {
+=======
+ 		lm_draw_actions_dropdown($logs_actions, "logs");
+         //lm_draw_actions_dropdown($port_actions, "logs");
+ 
+ }
+ 
+ function impblinding_view_get_logs_records(&$sql_where, $apply_limits = TRUE) {
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
      /* create SQL where clause */
  
      $sql_where = "";
@@ -322,10 +377,17 @@
                  /* ==================================================== */
                  imp_delete_logs($selected_items[$i]);
              }
+<<<<<<< HEAD
              header("Location: impb_logs.php");
          } 
  		
  	header("Location: impb_logs.php");
+=======
+             header("Location: impblinding_logs.php");
+         } 
+ 		
+ 	header("Location: impblinding_logs.php");
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  		
          exit;
      }
@@ -334,7 +396,11 @@
      $row_list = ""; $i = 0; $row_ids = "";
  
      /* loop through each of the ports selected on the previous page and get more info about them для создания первой страницы типа [Вы действительно хотите ....]*/
+<<<<<<< HEAD
      foreach ($_POST as $var => $val) {
+=======
+     while (list($var,$val) = each($_POST)) {
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
          if (ereg("^chk_([0-9]+)$", $var, $matches)) {
              /* ================= input validation ================= */
              input_validate_input_number($matches[1]);
@@ -352,7 +418,11 @@
  
      html_start_box("<strong>" . $logs_actions{$_POST["drp_action"]} . "</strong>", "60%", $colors["header_panel"], "3", "center", "");
  
+<<<<<<< HEAD
      print "<form action='impb_logs.php' method='post'>\n";
+=======
+     print "<form action='impblinding_logs.php' method='post'>\n";
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
      if ($_POST["drp_action"] == "1") {  /* удаление записей */
          print "    <tr>
@@ -377,7 +447,11 @@
                  <input type='hidden' name='action' value='actions_logs'>
                  <input type='hidden' name='selected_items' value='" . (isset($row_array) ? serialize($row_array) : '') . "'>
                  <input type='hidden' name='drp_action' value='" . $_POST["drp_action"] . "'>
+<<<<<<< HEAD
                  <a href='impb_logs.php'><img src='" . $config['url_path'] . "images/button_no.gif' alt='Cancel' align='absmiddle' border='0'></a>
+=======
+                 <a href='impblinding_logs.php'><img src='" . $config['url_path'] . "images/button_no.gif' alt='Cancel' align='absmiddle' border='0'></a>
+>>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
                  $save_html
              </td>
          </tr>
