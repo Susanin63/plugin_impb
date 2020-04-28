@@ -39,21 +39,13 @@
  
  
  $scan_date = read_config_option("dimpb_scan_date");
-<<<<<<< HEAD
  list($micro,$seconds) = explode(" ", microtime());
-=======
- list($micro,$seconds) = split(" ", microtime());
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  $start_time = $seconds + $micro;
  
  /* drop a few environment variables to minimize net-snmp load times */
  putenv("MIBS=RFC-1215");
  ini_set("max_execution_time", "0");
-<<<<<<< HEAD
  ini_set("memory_limit", "64M");
-=======
- ini_set("memory_limit", "32M");
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  
  /* process calling arguments */
  $parms = $_SERVER["argv"];
@@ -173,11 +165,7 @@
  	db_execute("UPDATE `imb_blmacs` SET `blmac_online`=0 WHERE `device_id`=" . $device["device_id"]);
  }
  
-<<<<<<< HEAD
  impb_db_update_device_status($device, $host_up, $scan_date, $start_time);
-=======
- dimpb_db_update_device_status($device, $host_up, $scan_date, $start_time);
->>>>>>> ed470b904e341c5135d8bf38b24011ac7bfc7e63
  dimpb_db_process_remove($device_id);
  exit;
  
